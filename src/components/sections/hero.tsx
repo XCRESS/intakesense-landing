@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function Hero() {
+export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const taglineRef = useRef<HTMLParagraphElement>(null)

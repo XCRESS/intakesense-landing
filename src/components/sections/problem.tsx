@@ -51,7 +51,7 @@ const problems = [
   },
 ]
 
-export function Problem() {
+export default function Problem() {
   const sectionRef = useRef<HTMLElement>(null)
   const statsRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })

@@ -1,15 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRef } from 'react'
 import { 
   Zap, Shield, Target, Brain, 
   CheckCircle, ArrowRight
 } from 'lucide-react'
-import { motion, useInView } from 'framer-motion'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useScrollAnimation, useStaggeredAnimation, scrollAnimationClasses } from '@/hooks/use-scroll-animation'
 
 const solutionFeatures = [
   {
@@ -79,55 +75,13 @@ const solutionBenefits = [
   { icon: '🚀', title: 'Growth', value: '3x', desc: 'Scale your team faster' }
 ]
 
-export function Solution() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const featuresRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 })
-
-  useEffect(() => {
-    if (!sectionRef.current) return
-    
-    const ctx = gsap.context(() => {
-      // Simplified feature cards animation
-      gsap.utils.toArray<HTMLElement>('.feature-card').forEach((feature, index) => {
-        gsap.set(feature, { opacity: 0, y: 50 })
-        gsap.to(feature, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          delay: index * 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: feature,
-            start: 'top 90%',
-            once: true
-          }
-        })
-      })
-
-      // Simplified benefits animation
-      gsap.utils.toArray<HTMLElement>('.benefit-item').forEach((benefit, index) => {
-        gsap.set(benefit, { opacity: 0, x: -20 })
-        gsap.to(benefit, {
-          opacity: 1,
-          x: 0,
-          duration: 0.4,
-          delay: index * 0.05,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: benefit,
-            start: 'top 95%',
-            once: true
-          }
-        })
-      })
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
+export default function Solution() {
+  const { elementRef: headerRef, isVisible: headerVisible } = useScrollAnimation({ delay: 200 })
+  const { containerRef: featuresRef, visibleItems: featuresVisible } = useStaggeredAnimation(solutionFeatures.length, { delay: 400 })
+  const { containerRef: benefitsRef, visibleItems: benefitsVisible } = useStaggeredAnimation(solutionBenefits.length, { delay: 600 })
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-background to-gray-50/50">
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-background to-gray-50/50">
       {/* Sophisticated Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-primary-200/20 to-accent-200/15 rounded-full filter blur-3xl" />
@@ -148,11 +102,9 @@ export function Solution() {
 
       <div className="container px-6 mx-auto">
         {/* Premium Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="max-w-5xl mx-auto text-center mb-24"
+        <div
+          ref={headerRef as any}
+          className={`max-w-5xl mx-auto text-center mb-24 ${scrollAnimationClasses.fadeUp(headerVisible)}`}
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 mb-8">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -170,20 +122,20 @@ export function Solution() {
             We don&apos;t just find candidates—we engineer perfect matches using advanced AI,
             human expertise, and India&apos;s largest verified talent network.
           </p>
-        </motion.div>
+        </div>
 
         {/* Premium Feature Showcase */}
-        <div ref={featuresRef} className="space-y-20 mb-24">
-          {solutionFeatures.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 60 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className={`feature-card group relative ${
-                index % 2 === 0 ? '' : 'lg:flex-row-reverse'
-              }`}
-            >
+        <div ref={featuresRef as any} className="space-y-20 mb-24">
+          {solutionFeatures.map((feature, index) => {
+            const isVisible = featuresVisible[index]
+            
+            return (
+              <div 
+                key={index}
+                className={`feature-card group relative ${
+                  index % 2 === 0 ? '' : 'lg:flex-row-reverse'
+                } ${scrollAnimationClasses.fadeUp(isVisible)}`}
+              >
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 {/* Feature Content */}
                 <div className="space-y-8">
@@ -274,40 +226,48 @@ export function Solution() {
 
                       {/* Visual Progress Bars */}
                       <div className="space-y-4">
-                        {feature.metrics.map((metric, idx) => (
-                          <div key={idx} className="space-y-2">
-                            <div className="flex justify-between items-center">
-                              <span className="text-body-sm font-medium text-gray-700">{metric.label}</span>
-                              <span className="text-body-sm font-bold text-gray-900">{metric.value}</span>
+                        {feature.metrics.map((metric, idx) => {
+                          // Calculate progress width based on metric value
+                          const getProgressWidth = (value: string) => {
+                            if (value.includes('%')) return value;
+                            if (value === '₹0') return '100%';
+                            if (value === '500+') return '85%';
+                            if (value === '12') return '95%'; // 12 days is very fast
+                            if (value === '48hr') return '90%';
+                            if (value.includes('x')) return '80%';
+                            return '90%'; // default fallback
+                          };
+                          
+                          return (
+                            <div key={idx} className="space-y-2">
+                              <div className="flex justify-between items-center">
+                                <span className="text-body-sm font-medium text-gray-700">{metric.label}</span>
+                                <span className="text-body-sm font-bold text-gray-900">{metric.value}</span>
+                              </div>
+                              <div className="h-3 bg-gray-200 rounded-full overflow-hidden relative">
+                                <div
+                                  className={`h-full bg-gradient-to-r ${feature.color} rounded-full transition-all duration-1000 ease-out`}
+                                  style={{ 
+                                    width: isVisible ? getProgressWidth(metric.value) : '0%',
+                                    transitionDelay: `${0.5 + idx * 0.3}s`
+                                  }}
+                                />
+                              </div>
                             </div>
-                            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                              <motion.div
-                                className={`h-full bg-gradient-to-r ${feature.color} rounded-full`}
-                                initial={{ width: '0%' }}
-                                animate={isInView ? { 
-                                  width: metric.value.includes('%') ? metric.value : '90%' 
-                                } : {}}
-                                transition={{ duration: 1.5, delay: index * 0.3 + idx * 0.2 }}
-                              />
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
-          ))}
+              </div>
+            );
+          })}
         </div>
 
         {/* Premium Benefits Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1, delay: 1 }}
-          className="space-y-16"
-        >
+        <div className="space-y-16">
           {/* Section Header */}
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h3 className="text-h2 font-bold text-gray-900">
@@ -320,15 +280,15 @@ export function Solution() {
           </div>
 
           {/* Benefits Grid */}
-          <div className="benefits-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {solutionBenefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="benefit-item group relative p-8 bg-white rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl transition-all duration-500"
-              >
+          <div ref={benefitsRef as any} className="benefits-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {solutionBenefits.map((benefit, index) => {
+              const isVisible = benefitsVisible[index]
+              
+              return (
+                <div
+                  key={index}
+                  className={`benefit-item group relative p-8 bg-white rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl transition-all duration-500 ${scrollAnimationClasses.scaleIn(isVisible)}`}
+                >
                 {/* Background gradient on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-accent-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                 
@@ -347,8 +307,9 @@ export function Solution() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            ))}
+                </div>
+              );
+            })}
           </div>
 
           {/* Compelling CTA Section */}
@@ -405,7 +366,7 @@ export function Solution() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

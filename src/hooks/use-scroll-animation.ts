@@ -1,70 +1,137 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useEffect, useRef, useState } from 'react'
 
-gsap.registerPlugin(ScrollTrigger)
+interface ScrollAnimationOptions {
+  threshold?: number
+  rootMargin?: string
+  triggerOnce?: boolean
+  delay?: number
+}
 
-export function useScrollAnimation<T extends HTMLElement = HTMLElement>() {
-  const ref = useRef<T>(null)
+// Main scroll animation hook using Intersection Observer
+export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
+  const [isVisible, setIsVisible] = useState(false)
+  const elementRef = useRef<HTMLElement | null>(null)
 
-  const animateFrom = (elem: HTMLElement, direction = 1) => {
-    const offset = 100
-    let x = 0
-    let y = direction * offset
-
-    if (elem.classList.contains('animate-left')) {
-      x = -offset
-      y = 0
-    } else if (elem.classList.contains('animate-right')) {
-      x = offset
-      y = 0
-    }
-
-    elem.style.transform = `translate(${x}px, ${y}px)`
-    elem.style.opacity = '0'
-
-    gsap.fromTo(
-      elem,
-      { x, y, autoAlpha: 0 },
-      {
-        duration: 1.25,
-        x: 0,
-        y: 0,
-        autoAlpha: 1,
-        ease: 'expo.out',
-        overwrite: 'auto',
-      }
-    )
-  }
-
-  const hide = (elem: HTMLElement) => {
-    gsap.set(elem, { autoAlpha: 0 })
-  }
+  const {
+    threshold = 0.1,
+    rootMargin = '0px 0px -100px 0px',
+    triggerOnce = true,
+    delay = 0
+  } = options
 
   useEffect(() => {
-    if (!ref.current) return
+    const element = elementRef.current
+    if (!element) return
 
-    const elements = ref.current.querySelectorAll('.animate-on-scroll')
-    
-    elements.forEach((elem) => {
-      const htmlElem = elem as HTMLElement
-      hide(htmlElem)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (delay > 0) {
+            setTimeout(() => setIsVisible(true), delay)
+          } else {
+            setIsVisible(true)
+          }
+          
+          if (triggerOnce) {
+            observer.unobserve(element)
+          }
+        } else if (!triggerOnce) {
+          setIsVisible(false)
+        }
+      },
+      { threshold, rootMargin }
+    )
 
-      ScrollTrigger.create({
-        trigger: htmlElem,
-        start: 'top bottom-=100',
-        onEnter: () => animateFrom(htmlElem),
-        onEnterBack: () => animateFrom(htmlElem, -1),
-        onLeave: () => hide(htmlElem),
-      })
-    })
+    observer.observe(element)
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    return () => observer.disconnect()
+  }, [threshold, rootMargin, triggerOnce, delay])
+
+  return { elementRef, isVisible }
+}
+
+// Staggered animation hook for lists
+export function useStaggeredAnimation(itemCount: number, options: ScrollAnimationOptions = {}) {
+  const [visibleItems, setVisibleItems] = useState<boolean[]>(new Array(itemCount).fill(false))
+  const containerRef = useRef<HTMLElement | null>(null)
+
+  const {
+    threshold = 0.1,
+    rootMargin = '0px 0px -100px 0px',
+    delay = 0
+  } = options
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Stagger the animations
+          const staggerDelay = 100 // 100ms between each item
+          visibleItems.forEach((_, index) => {
+            setTimeout(() => {
+              setVisibleItems(prev => {
+                const newArray = [...prev]
+                newArray[index] = true
+                return newArray
+              })
+            }, delay + (index * staggerDelay))
+          })
+          
+          observer.unobserve(container)
+        }
+      },
+      { threshold, rootMargin }
+    )
+
+    observer.observe(container)
+
+    return () => observer.disconnect()
+  }, [itemCount, threshold, rootMargin, delay])
+
+  return { containerRef, visibleItems }
+}
+
+// CSS class generator for animations
+export const scrollAnimationClasses = {
+  fadeUp: (isVisible: boolean) => `
+    transition-all duration-700 ease-out transform
+    ${isVisible 
+      ? 'opacity-100 translate-y-0' 
+      : 'opacity-0 translate-y-8'
     }
-  }, [])
-
-  return ref
+  `,
+  
+  fadeIn: (isVisible: boolean) => `
+    transition-opacity duration-700 ease-out
+    ${isVisible ? 'opacity-100' : 'opacity-0'}
+  `,
+  
+  scaleIn: (isVisible: boolean) => `
+    transition-all duration-700 ease-out transform
+    ${isVisible 
+      ? 'opacity-100 scale-100' 
+      : 'opacity-0 scale-95'
+    }
+  `,
+  
+  slideLeft: (isVisible: boolean) => `
+    transition-all duration-700 ease-out transform
+    ${isVisible 
+      ? 'opacity-100 translate-x-0' 
+      : 'opacity-0 translate-x-8'
+    }
+  `,
+  
+  slideRight: (isVisible: boolean) => `
+    transition-all duration-700 ease-out transform
+    ${isVisible 
+      ? 'opacity-100 translate-x-0' 
+      : 'opacity-0 -translate-x-8'
+    }
+  `
 }

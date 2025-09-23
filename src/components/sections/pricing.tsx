@@ -12,8 +12,11 @@ const pricingPlans = [
   {
     name: 'Free Forever',
     price: 'Free',
+    annualPrice: 'Free',
     originalPrice: null,
+    originalAnnualPrice: null,
     period: 'forever',
+    annualPeriod: 'forever',
     description: 'Perfect for startups and small teams to get started',
     icon: Sparkles,
     color: 'from-gray-400 to-gray-500',
@@ -36,8 +39,11 @@ const pricingPlans = [
   {
     name: 'Professional',
     price: '₹29,999',
+    annualPrice: '₹22,499',
     originalPrice: '₹45,000',
+    originalAnnualPrice: '₹33,750',
     period: '/month',
+    annualPeriod: '/month',
     description: 'Best for growing companies serious about hiring',
     icon: Zap,
     color: 'from-primary-500 to-accent-500',
@@ -60,8 +66,11 @@ const pricingPlans = [
   {
     name: 'Enterprise',
     price: 'Custom',
+    annualPrice: 'Custom',
     originalPrice: null,
+    originalAnnualPrice: null,
     period: 'pricing',
+    annualPeriod: 'pricing',
     description: 'Complete talent acquisition partnership',
     icon: Crown,
     color: 'from-accent-500 to-orange-500',
@@ -83,7 +92,7 @@ const pricingPlans = [
   },
 ]
 
-export function Pricing() {
+export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
@@ -227,7 +236,7 @@ export function Pricing() {
               }`}
             >
               Annual
-              <span className="billing-toggle absolute -top-2 -right-2 text-xs bg-accent-500 text-white px-2 py-1 rounded-full font-bold">
+              <span className="billing-toggle absolute -top-2 -right-2 text-xs bg-accent-500 text-white px-2 py-1 rounded-full font-bold z-10 whitespace-nowrap">
                 25% OFF
               </span>
             </button>
@@ -273,7 +282,7 @@ export function Pricing() {
                 {/* Icon with premium styling */}
                 <div className="relative mb-8">
                   <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${plan.color} text-white shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-300`}>
-                    <plan.icon className="w-8 h-8" />
+                    <plan.icon className="w-8 h-8 text-white relative z-10" strokeWidth={2} />
                   </div>
                 </div>
 
@@ -288,23 +297,27 @@ export function Pricing() {
                   <div className="space-y-3">
                     <div className="flex items-baseline gap-2">
                       <span className="text-4xl lg:text-5xl font-black text-gray-900">
-                        {plan.price}
+                        {billingCycle === 'annual' ? plan.annualPrice : plan.price}
                       </span>
-                      {plan.period && (
-                        <span className="text-lg text-gray-600 font-medium">{plan.period}</span>
+                      {(billingCycle === 'annual' ? plan.annualPeriod : plan.period) && (
+                        <span className="text-lg text-gray-600 font-medium">
+                          {billingCycle === 'annual' ? plan.annualPeriod : plan.period}
+                        </span>
                       )}
                     </div>
                     
-                    {plan.originalPrice && (
+                    {(billingCycle === 'annual' ? plan.originalAnnualPrice : plan.originalPrice) && (
                       <div className="flex items-center gap-3">
-                        <span className="text-body-sm text-gray-500 line-through">{plan.originalPrice}</span>
+                        <span className="text-body-sm text-gray-500 line-through">
+                          {billingCycle === 'annual' ? plan.originalAnnualPrice : plan.originalPrice}
+                        </span>
                         <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">
-                          {plan.savings}
+                          {billingCycle === 'annual' ? 'Save ₹11,251/month' : plan.savings}
                         </span>
                       </div>
                     )}
                     
-                    {!plan.originalPrice && (
+                    {!(billingCycle === 'annual' ? plan.originalAnnualPrice : plan.originalPrice) && (
                       <div className="text-body-sm text-gray-600 font-medium">
                         {plan.savings}
                       </div>
@@ -312,7 +325,7 @@ export function Pricing() {
                     
                     {billingCycle === 'annual' && plan.price !== 'Free' && plan.price !== 'Custom' && (
                       <div className="text-body-sm text-primary-700 font-bold bg-primary-50 px-3 py-1 rounded-full inline-block">
-                        Save 25% with annual billing
+                        25% OFF Annual Billing
                       </div>
                     )}
                   </div>

@@ -1,28 +1,10 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { SmoothScrollProvider } from '@/providers/smooth-scroll-provider'
-
-// Dynamic imports for better code splitting and performance
-const Hero = dynamic(() => import('@/components/sections/hero').then(mod => ({ default: mod.Hero })), {
-  ssr: true,
-  loading: () => <div className="min-h-screen" />
-})
-
-const Problem = dynamic(() => import('@/components/sections/problem').then(mod => ({ default: mod.Problem })), {
-  ssr: true,
-  loading: () => <div className="min-h-[50vh]" />
-})
-
-const Solution = dynamic(() => import('@/components/sections/solution').then(mod => ({ default: mod.Solution })), {
-  ssr: true,
-  loading: () => <div className="min-h-[50vh]" />
-})
-
-const Pricing = dynamic(() => import('@/components/sections/pricing').then(mod => ({ default: mod.Pricing })), {
-  ssr: true,
-  loading: () => <div className="min-h-[50vh]" />
-})
+import Hero from '@/components/sections/hero'
+import Problem from '@/components/sections/problem'
+import Solution from '@/components/sections/solution'
+import Pricing from '@/components/sections/pricing'
 
 export default function Home() {
   return (
