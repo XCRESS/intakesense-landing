@@ -10,9 +10,9 @@ interface ScrollAnimationOptions {
 }
 
 // Main scroll animation hook using Intersection Observer
-export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
+export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(options: ScrollAnimationOptions = {}) {
   const [isVisible, setIsVisible] = useState(false)
-  const elementRef = useRef<HTMLElement | null>(null)
+  const elementRef = useRef<T | null>(null)
 
   const {
     threshold = 0.1,
@@ -53,9 +53,9 @@ export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
 }
 
 // Staggered animation hook for lists
-export function useStaggeredAnimation(itemCount: number, options: ScrollAnimationOptions = {}) {
+export function useStaggeredAnimation<T extends HTMLElement = HTMLDivElement>(itemCount: number, options: ScrollAnimationOptions = {}) {
   const [visibleItems, setVisibleItems] = useState<boolean[]>(new Array(itemCount).fill(false))
-  const containerRef = useRef<HTMLElement | null>(null)
+  const containerRef = useRef<T | null>(null)
 
   const {
     threshold = 0.1,
@@ -91,7 +91,7 @@ export function useStaggeredAnimation(itemCount: number, options: ScrollAnimatio
     observer.observe(container)
 
     return () => observer.disconnect()
-  }, [itemCount, threshold, rootMargin, delay])
+  }, [itemCount, threshold, rootMargin, delay, visibleItems])
 
   return { containerRef, visibleItems }
 }

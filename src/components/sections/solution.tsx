@@ -1,6 +1,5 @@
 'use client'
 
-import { useRef } from 'react'
 import { 
   Zap, Shield, Target, Brain, 
   CheckCircle, ArrowRight
@@ -103,7 +102,7 @@ export default function Solution() {
       <div className="container px-6 mx-auto">
         {/* Premium Header */}
         <div
-          ref={headerRef as any}
+          ref={headerRef}
           className={`max-w-5xl mx-auto text-center mb-24 ${scrollAnimationClasses.fadeUp(headerVisible)}`}
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 mb-8">
@@ -125,7 +124,7 @@ export default function Solution() {
         </div>
 
         {/* Premium Feature Showcase */}
-        <div ref={featuresRef as any} className="space-y-20 mb-24">
+        <div ref={featuresRef} className="space-y-20 mb-24">
           {solutionFeatures.map((feature, index) => {
             const isVisible = featuresVisible[index]
             
@@ -280,7 +279,7 @@ export default function Solution() {
           </div>
 
           {/* Benefits Grid */}
-          <div ref={benefitsRef as any} className="benefits-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div ref={benefitsRef} className="benefits-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {solutionBenefits.map((benefit, index) => {
               const isVisible = benefitsVisible[index]
               
