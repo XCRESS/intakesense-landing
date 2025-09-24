@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Check, X, Sparkles, Zap, Crown, Shield } from 'lucide-react'
+import { Check, Sparkles, Zap, Crown, Shield } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 
@@ -89,7 +89,6 @@ const pricingPlans = [
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 })
 
   useEffect(() => {
@@ -170,7 +169,7 @@ export default function Pricing() {
                 <Shield className="w-6 h-6 text-blue-600" />
                 <div>
                   <p className="font-semibold text-blue-800">Zero Risk Guarantee</p>
-                  <p className="text-sm text-blue-600">If we don't deliver, you don't pay. Period.</p>
+                  <p className="text-sm text-blue-600">If we don&apos;t deliver, you don&apos;t pay. Period.</p>
                 </div>
               </div>
 
@@ -354,12 +353,12 @@ export default function Pricing() {
                 </div>
 
                 <h3 className="text-4xl font-black">
-                  We're So Confident, We'll Work For Free
+                  We&apos;re So Confident, We&apos;ll Work For Free
                 </h3>
 
                 <div className="max-w-2xl mx-auto space-y-6">
                   <p className="text-xl text-gray-200 leading-relaxed">
-                    If we don't fill your position within 12 days, or if your hire leaves within 90 days,
+                    If we don&apos;t fill your position within 12 days, or if your hire leaves within 90 days,
                     <span className="text-yellow-400 font-semibold"> we refund every rupee.</span>
                   </p>
 
@@ -393,7 +392,7 @@ export default function Pricing() {
           <div className="max-w-3xl mx-auto text-center space-y-8">
             <div className="space-y-4">
               <h3 className="text-3xl font-bold text-gray-900">
-                Still Not Sure? Let's Talk.
+                Still Not Sure? Let&apos;s Talk.
               </h3>
               <p className="text-lg text-gray-600">
                 Book a 15-minute call to discuss your specific hiring challenges.
