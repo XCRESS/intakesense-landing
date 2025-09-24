@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { TrendingDown, Users, Clock, AlertCircle } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
+import Image from 'next/image'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -75,8 +76,8 @@ export default function Problem() {
           onEnter: () => {
             gsap.from(stat, {
               textContent: 0,
-              duration: 2,
-              delay: index * 0.1,
+              duration: 1.2,
+              delay: index * 0.08,
               ease: 'power2.out',
               snap: { textContent: 1 },
               onUpdate: function() {
@@ -99,35 +100,13 @@ export default function Problem() {
         })
       })
 
-      // Parallax effect for background elements
-      gsap.to('.problem-bg-1', {
-        yPercent: -30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      })
-
-      gsap.to('.problem-bg-2', {
-        yPercent: 20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      })
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-background via-gray-50/30 to-background">
+    <section ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden bg-background z-20">
       {/* Sophisticated Background */}
       <div className="absolute inset-0 -z-10">
         <div className="problem-bg-1 absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-200/30 to-orange-200/20 rounded-full filter blur-3xl" />
@@ -148,27 +127,44 @@ export default function Problem() {
 
       <div className="container px-6 mx-auto">
         {/* Premium Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center mb-20"
-        >
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="space-y-6"
+          >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 border border-red-200 text-red-700 mb-6">
             <AlertCircle className="w-4 h-4" />
             <span className="text-sm font-semibold tracking-wide">CURRENT STATE OF HIRING IN INDIA</span>
           </div>
           
           <h2 className="text-display-md md:text-display-lg font-black mb-6 leading-none">
-            The <span className="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">Hiring Crisis</span><br />
-            <span className="text-gray-700">Crippling Indian Businesses</span>
+            The <span className="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">Hiring Problem</span><br />
+            <span className="text-gray-700">Facing Indian Companies</span>
           </h2>
-          
-          <p className="text-lead text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            Every day of delay costs companies dearly. Traditional hiring methods are failing, 
-            leaving critical positions empty and businesses struggling to scale.
-          </p>
-        </motion.div>
+
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Traditional recruitment is broken. High costs, long delays, and poor retention are holding businesses back.
+            </p>
+          </motion.div>
+
+          {/* Problem Illustration */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center"
+          >
+            <Image
+              src="/illustrations/undraw_time-management_4ss6.svg"
+              alt="Time Management Crisis"
+              width={400}
+              height={300}
+              className="w-full h-auto max-w-md"
+            />
+          </motion.div>
+        </div>
 
         {/* Premium Data Visualization Grid */}
         <div ref={statsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
@@ -215,7 +211,7 @@ export default function Problem() {
                       className={`h-full bg-gradient-to-r ${problem.color} rounded-full`}
                       initial={{ width: '0%' }}
                       animate={isInView ? { width: `${problem.stat.includes('%') ? problem.stat.replace('%', '') : '75'}%` } : {}}
-                      transition={{ duration: 2, delay: index * 0.2 + 1 }}
+                      transition={{ duration: 1.2, delay: index * 0.15 + 0.8 }}
                     />
                   </div>
                 </div>
@@ -260,14 +256,12 @@ export default function Problem() {
         >
           {/* Impact Statement */}
           <div className="space-y-6">
-            <h3 className="text-h3 md:text-h2 font-bold text-gray-800">
-              The Cost of Inaction is 
-              <span className="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent"> Devastating</span>
+            <h3 className="text-h2 md:text-h1 font-bold text-gray-800">
+              The Cost of <span className="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">Inaction</span>
             </h3>
-            
-            <p className="text-body-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              While companies struggle with these challenges, their competitors are scaling rapidly. 
-              Every day without the right talent is a day of lost opportunities, diminished growth, and competitive disadvantage.
+
+            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+              While you struggle with traditional hiring, competitors using AI-powered recruitment are scaling faster and hiring better talent.
             </p>
           </div>
           

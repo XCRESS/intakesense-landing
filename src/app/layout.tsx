@@ -15,15 +15,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Intakesense - Hiring That Makes Sense",
-  description: "Revolutionary recruitment platform that takes responsibility for keeping your positions filled. No more empty seats, just continuous intelligent talent acquisition.",
-  keywords: "recruitment, hiring, talent acquisition, job portal, AI hiring, guaranteed placement",
+  title: "Intakesense - AI-Powered Recruitment Platform",
+  description: "Guaranteed placements in 12 days or it's free. AI-powered recruitment platform with full responsibility guarantee.",
+  keywords: "AI recruitment, hiring platform, guaranteed placement, talent acquisition, recruitment automation",
   authors: [{ name: "Intakesense" }],
   creator: "Intakesense",
   publisher: "Intakesense",
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
   openGraph: {
-    title: "Intakesense - Hiring That Makes Sense",
-    description: "Revolutionary recruitment platform that takes responsibility for keeping your positions filled.",
+    title: "Intakesense - AI-Powered Recruitment Platform",
+    description: "Guaranteed placements in 12 days or it's free. AI-powered recruitment with responsibility guarantee.",
     url: "https://intakesense.com",
     siteName: "Intakesense",
     locale: "en_US",
@@ -31,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Intakesense - Hiring That Makes Sense",
-    description: "Revolutionary recruitment platform that takes responsibility for keeping your positions filled.",
+    title: "Intakesense - AI-Powered Recruitment Platform",
+    description: "Guaranteed placements in 12 days or it's free. AI-powered recruitment with responsibility guarantee.",
     creator: "@intakesense",
   },
   robots: {

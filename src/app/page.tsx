@@ -1,31 +1,43 @@
 'use client'
 
 import { SmoothScrollProvider } from '@/providers/smooth-scroll-provider'
+import { Header } from '@/components/ui/header'
 import Hero from '@/components/sections/hero'
 import Problem from '@/components/sections/problem'
 import Solution from '@/components/sections/solution'
 import Pricing from '@/components/sections/pricing'
+import Image from 'next/image'
 
 export default function Home() {
   return (
     <SmoothScrollProvider>
-      <main className="relative">
+      <Header />
+      <main className="relative pt-20">
         <Hero />
         <Problem />
         <Solution />
         <Pricing />
         
         {/* Footer */}
-        <footer className="relative py-16 border-t border-border/50">
-          <div className="container px-4 mx-auto">
-            <div className="flex flex-col items-center justify-center gap-4">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Intakesense
-              </h3>
-              <p className="text-muted-foreground">
-                Hiring that makes sense
+        <footer className="relative py-16 border-t border-gray-200 bg-white z-20">
+          <div className="container px-6 mx-auto">
+            <div className="flex flex-col items-center justify-center gap-6">
+              {/* Logo */}
+              <div className="flex items-center gap-3">
+                <Image src="/logo.png" alt="Intakesense" width={40} height={40} className="w-10 h-10 object-contain" />
+                <div className="flex flex-col">
+                  <span className="text-2xl font-bold text-gradient-premium">
+                    Intakesense
+                  </span>
+                  <span className="text-xs text-gray-500 font-medium tracking-wide -mt-1">
+                    AI RECRUITMENT
+                  </span>
+                </div>
+              </div>
+              <p className="text-gray-600 text-center max-w-md">
+                AI-powered recruitment platform with guaranteed results
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-500">
                 © 2025 Intakesense. All rights reserved.
               </p>
             </div>

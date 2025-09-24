@@ -3,93 +3,87 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Check, X, Sparkles, Zap, Crown } from 'lucide-react'
+import { Check, X, Sparkles, Zap, Crown, Shield } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
+import Image from 'next/image'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const pricingPlans = [
   {
-    name: 'Free Forever',
-    price: 'Free',
-    annualPrice: 'Free',
-    originalPrice: null,
-    originalAnnualPrice: null,
-    period: 'forever',
-    annualPeriod: 'forever',
-    description: 'Perfect for startups and small teams to get started',
+    name: 'Trial',
+    price: '₹0',
+    period: 'for first hire',
+    description: 'Test our guarantee with zero risk',
     icon: Sparkles,
-    color: 'from-gray-400 to-gray-500',
-    bgColor: 'from-gray-50 to-gray-100',
-    savings: 'No credit card required',
-    features: [
-      { text: 'Up to 3 active positions', included: true, highlight: false },
-      { text: 'Basic AI candidate matching', included: true, highlight: false },
-      { text: 'Email support', included: true, highlight: false },
-      { text: 'Standard job board posting', included: true, highlight: false },
-      { text: 'Basic candidate screening', included: true, highlight: false },
-      { text: '30-day placement support', included: true, highlight: false },
-      { text: 'Dedicated account manager', included: false, highlight: false },
-      { text: 'Advanced AI screening', included: false, highlight: false },
+    color: 'from-green-500 to-green-600',
+    bgColor: 'from-green-50 to-green-100',
+    outcomes: [
+      'Fill 1 position completely free',
+      'Experience our 12-day process',
+      'Meet your dedicated recruiter',
+      '90-day retention guarantee'
     ],
-    cta: 'Get Started Free',
-    popular: false,
-    badge: 'FREE FOREVER',
-  },
-  {
-    name: 'Professional',
-    price: '₹29,999',
-    annualPrice: '₹22,499',
-    originalPrice: '₹45,000',
-    originalAnnualPrice: '₹33,750',
-    period: '/month',
-    annualPeriod: '/month',
-    description: 'Best for growing companies serious about hiring',
-    icon: Zap,
-    color: 'from-primary-500 to-accent-500',
-    bgColor: 'from-primary-100 to-accent-50',
-    savings: 'Save ₹15,001/month',
-    features: [
-      { text: 'Unlimited active positions', included: true, highlight: false },
-      { text: 'Advanced AI + human curation', included: true, highlight: true },
-      { text: 'Priority support (2-hour SLA)', included: true, highlight: false },
-      { text: 'Pan-India + remote talent search', included: true, highlight: false },
-      { text: 'Complete screening pipeline', included: true, highlight: false },
-      { text: '90-day placement guarantee', included: true, highlight: true },
-      { text: 'Dedicated account manager', included: true, highlight: true },
-      { text: 'Salary negotiation support', included: true, highlight: false },
+    limitations: [
+      'One active position only',
+      'Standard candidate pool',
+      'Email + chat support'
     ],
     cta: 'Start Free Trial',
+    popular: false,
+    badge: '100% FREE',
+    savings: 'Save ₹2-5L vs traditional agencies'
+  },
+  {
+    name: 'Growth',
+    price: '₹1.2L',
+    period: 'per successful hire',
+    description: 'Scale your team without the hiring headache',
+    icon: Zap,
+    color: 'from-primary-500 to-primary-600',
+    bgColor: 'from-primary-50 to-blue-50',
+    outcomes: [
+      'Fill unlimited positions',
+      'Access premium talent pool',
+      'Dedicated account manager',
+      '2-year replacement guarantee',
+      'Salary negotiation included'
+    ],
+    businessImpact: {
+      roi: '320% average ROI in Year 1',
+      cost: '60% less than traditional agencies',
+      speed: '5x faster than internal hiring'
+    },
+    cta: 'Start Hiring Now',
     popular: true,
-    badge: 'MOST POPULAR',
+    badge: 'BEST VALUE',
+    savings: '₹0 if we don\'t deliver'
   },
   {
     name: 'Enterprise',
     price: 'Custom',
-    annualPrice: 'Custom',
-    originalPrice: null,
-    originalAnnualPrice: null,
     period: 'pricing',
-    annualPeriod: 'pricing',
     description: 'Complete talent acquisition partnership',
     icon: Crown,
-    color: 'from-accent-500 to-orange-500',
-    bgColor: 'from-accent-50 to-orange-50',
-    savings: 'Tailored to your needs',
-    features: [
-      { text: 'Everything in Professional', included: true, highlight: false },
-      { text: 'Custom AI model training', included: true, highlight: false },
-      { text: 'Dedicated success team', included: true, highlight: false },
-      { text: 'Executive & leadership search', included: true, highlight: true },
-      { text: 'Advanced analytics dashboard', included: true, highlight: false },
-      { text: 'Lifetime placement guarantee', included: true, highlight: true },
-      { text: 'On-site recruitment support', included: true, highlight: false },
-      { text: 'Custom integrations & API', included: true, highlight: false },
+    color: 'from-purple-500 to-purple-600',
+    bgColor: 'from-purple-50 to-purple-100',
+    outcomes: [
+      'Everything in Growth plan',
+      'C-level and leadership search',
+      'Custom talent pipelines',
+      'Dedicated recruitment team',
+      'Advanced analytics & reporting'
     ],
-    cta: 'Contact Sales',
+    businessImpact: {
+      roi: 'Guaranteed positive ROI',
+      cost: 'Predictable monthly investment',
+      speed: 'Same-week candidate delivery'
+    },
+    cta: 'Book Strategy Call',
     popular: false,
-    badge: 'ENTERPRISE',
-  },
+    badge: 'WHITE GLOVE',
+    savings: 'Volume discounts available'
+  }
 ]
 
 export default function Pricing() {
@@ -107,141 +101,106 @@ export default function Pricing() {
         gsap.fromTo(
           card,
           {
-            y: 80,
+            y: 30,
             opacity: 0,
-            rotateY: -15,
           },
           {
             y: 0,
             opacity: 1,
-            rotateY: 0,
-            duration: 1,
-            ease: 'power3.out',
+            duration: 0.6,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: card,
               start: 'top 85%',
             },
-            delay: index * 0.15,
+            delay: index * 0.1,
           }
         )
-
-        // Hover effect
-        card.addEventListener('mouseenter', () => {
-          gsap.to(card, {
-            y: -10,
-            duration: 0.3,
-            ease: 'power2.out',
-          })
-        })
-
-        card.addEventListener('mouseleave', () => {
-          gsap.to(card, {
-            y: 0,
-            duration: 0.3,
-            ease: 'power2.out',
-          })
-        })
       })
 
-      // Animate toggle switch
-      gsap.to('.billing-toggle', {
-        scale: 1.1,
-        duration: 0.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      })
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-background via-gray-50/40 to-background">
-      {/* Sophisticated Background */}
+    <section ref={sectionRef} className="relative py-24 lg:py-32 bg-white">
+      {/* Clean Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-r from-primary-200/20 to-accent-200/15 rounded-full filter blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-accent-200/15 to-primary-200/20 rounded-full filter blur-3xl" />
-        
-        {/* Grid overlay */}
-        <div className="absolute inset-0 opacity-[0.015]">
-          <svg width="80" height="80" viewBox="0 0 80 80" className="w-full h-full">
-            <defs>
-              <pattern id="pricing-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="1"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#pricing-grid)" />
-          </svg>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
       </div>
 
       <div className="container px-6 mx-auto">
-        {/* Premium Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="max-w-5xl mx-auto text-center mb-20"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-200 text-primary-700 mb-6">
-            <Crown className="w-4 h-4" />
-            <span className="text-sm font-semibold tracking-wide">INDIA&apos;S MOST AFFORDABLE RECRUITMENT SOLUTION</span>
-          </div>
-          
-          <h2 className="text-display-md md:text-display-lg font-black mb-6 leading-none">
-            <span className="text-gray-900">Transparent Pricing,</span><br />
-            <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Guaranteed Results</span>
-          </h2>
-          
-          <p className="text-lead text-gray-600 leading-relaxed max-w-3xl mx-auto mb-8">
-            Pay only for successful placements. No hidden costs, no recruitment fees, 
-            no lengthy contracts. Choose your plan and start hiring better talent today.
-          </p>
+        {/* Clean Header */}
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="space-y-6"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-200 text-primary-700 mb-6">
+              <Crown className="w-4 h-4" />
+              <span className="text-sm font-semibold tracking-wide">INDIA&apos;S MOST AFFORDABLE RECRUITMENT SOLUTION</span>
+            </div>
 
-          {/* Value Proposition */}
-          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500 mb-12">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-400" />
-              <span>No placement, no payment</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-blue-400" />
-              <span>15-day free trial</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-purple-400" />
-              <span>Cancel anytime</span>
-            </div>
-          </div>
+            <h2 className="text-5xl md:text-6xl font-black mb-6 leading-none text-gray-900">
+              Stop Wasting Money on
+              <span className="block text-red-600">Failed Hires</span>
+            </h2>
 
-          {/* Billing Toggle - Enhanced */}
-          <div className="inline-flex items-center gap-1 p-1 bg-white rounded-2xl shadow-lg border border-gray-200">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                billingCycle === 'monthly'
-                  ? 'bg-primary-600 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle('annual')}
-              className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 relative ${
-                billingCycle === 'annual'
-                  ? 'bg-primary-600 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
-            >
-              Annual
-              <span className="billing-toggle absolute -top-2 -right-2 text-xs bg-accent-500 text-white px-2 py-1 rounded-full font-bold z-10 whitespace-nowrap">
-                25% OFF
-              </span>
-            </button>
-          </div>
-        </motion.div>
+            <p className="text-2xl text-gray-600 leading-relaxed mb-8">
+              Traditional agencies charge ₹2-5L upfront, then disappear.
+              <span className="block mt-2 font-semibold text-gray-900">We only get paid when your hire completes 90 days.</span>
+            </p>
+
+            <div className="bg-red-50 border border-red-200 rounded-xl p-6 mb-8">
+              <h3 className="text-lg font-bold text-red-800 mb-2">The Hidden Cost of Empty Desks:</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-red-700">
+                <div>• ₹50L+ revenue loss per unfilled position</div>
+                <div>• 40% productivity drop in affected teams</div>
+                <div>• 6-8 months average hiring time</div>
+                <div>• 64% of hires fail within 18 months</div>
+              </div>
+            </div>
+
+            {/* Risk Reversal */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                <Shield className="w-6 h-6 text-blue-600" />
+                <div>
+                  <p className="font-semibold text-blue-800">Zero Risk Guarantee</p>
+                  <p className="text-sm text-blue-600">If we don't deliver, you don't pay. Period.</p>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <p className="text-lg font-medium text-gray-700 mb-2">
+                  Which plan matches your hiring volume?
+                </p>
+                <p className="text-sm text-gray-500">
+                  All plans include our 90-day retention guarantee
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Pricing Illustration */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center"
+          >
+            <Image
+              src="/illustrations/undraw_growth-analytics_bhy7.svg"
+              alt="Growth Analytics"
+              width={400}
+              height={300}
+              className="w-full h-auto max-w-md"
+            />
+          </motion.div>
+        </div>
 
         {/* Premium Pricing Cards */}
         <div ref={cardsRef} className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto" style={{ perspective: '1000px' }}>
@@ -289,76 +248,79 @@ export default function Pricing() {
                 {/* Plan details */}
                 <div className="relative space-y-6 mb-8">
                   <div>
-                    <h3 className="text-h3 font-bold text-gray-900 mb-2">{plan.name}</h3>
-                    <p className="text-body text-gray-600">{plan.description}</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                    <p className="text-gray-600 leading-relaxed">{plan.description}</p>
                   </div>
 
-                  {/* Pricing display with savings */}
-                  <div className="space-y-3">
+                  {/* Pricing display */}
+                  <div className="space-y-4">
                     <div className="flex items-baseline gap-2">
                       <span className="text-4xl lg:text-5xl font-black text-gray-900">
-                        {billingCycle === 'annual' ? plan.annualPrice : plan.price}
+                        {plan.price}
                       </span>
-                      {(billingCycle === 'annual' ? plan.annualPeriod : plan.period) && (
-                        <span className="text-lg text-gray-600 font-medium">
-                          {billingCycle === 'annual' ? plan.annualPeriod : plan.period}
-                        </span>
-                      )}
+                      <span className="text-lg text-gray-600 font-medium">
+                        {plan.period}
+                      </span>
                     </div>
-                    
-                    {(billingCycle === 'annual' ? plan.originalAnnualPrice : plan.originalPrice) && (
-                      <div className="flex items-center gap-3">
-                        <span className="text-body-sm text-gray-500 line-through">
-                          {billingCycle === 'annual' ? plan.originalAnnualPrice : plan.originalPrice}
-                        </span>
-                        <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">
-                          {billingCycle === 'annual' ? 'Save ₹11,251/month' : plan.savings}
-                        </span>
-                      </div>
-                    )}
-                    
-                    {!(billingCycle === 'annual' ? plan.originalAnnualPrice : plan.originalPrice) && (
-                      <div className="text-body-sm text-gray-600 font-medium">
+
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                      <p className="text-sm font-semibold text-green-700">
                         {plan.savings}
-                      </div>
-                    )}
-                    
-                    {billingCycle === 'annual' && plan.price !== 'Free' && plan.price !== 'Custom' && (
-                      <div className="text-body-sm text-primary-700 font-bold bg-primary-50 px-3 py-1 rounded-full inline-block">
-                        25% OFF Annual Billing
+                      </p>
+                    </div>
+
+                    {plan.businessImpact && (
+                      <div className="grid grid-cols-1 gap-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">ROI:</span>
+                          <span className="font-semibold text-primary-600">{plan.businessImpact.roi}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Cost vs competitors:</span>
+                          <span className="font-semibold text-green-600">{plan.businessImpact.cost}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Speed:</span>
+                          <span className="font-semibold text-blue-600">{plan.businessImpact.speed}</span>
+                        </div>
                       </div>
                     )}
                   </div>
                 </div>
 
-                {/* Enhanced Features List */}
-                <ul className="space-y-4 mb-10 flex-grow relative">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start gap-4">
-                      {feature.included ? (
-                        <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${
-                          feature.highlight ? 'bg-gradient-to-r from-primary-500 to-accent-500' : 'bg-green-100'
-                        }`}>
-                          <Check className={`w-4 h-4 ${feature.highlight ? 'text-white' : 'text-green-600'}`} />
-                        </div>
-                      ) : (
-                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
-                          <X className="w-4 h-4 text-gray-400" />
-                        </div>
-                      )}
-                      <span className={`text-body ${
-                        feature.included 
-                          ? (feature.highlight ? 'text-gray-900 font-semibold' : 'text-gray-700') 
-                          : 'text-gray-400'
-                      }`}>
-                        {feature.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                {/* Business Outcomes */}
+                <div className="space-y-6 mb-10 flex-grow">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-4">What You Get:</h4>
+                    <ul className="space-y-3">
+                      {plan.outcomes.map((outcome, outcomeIndex) => (
+                        <li key={outcomeIndex} className="flex items-start gap-3">
+                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
+                            <Check className="w-3 h-3 text-green-600" />
+                          </div>
+                          <span className="text-gray-700">{outcome}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {plan.limitations && (
+                    <div>
+                      <h4 className="font-semibold text-gray-700 mb-3 text-sm">Includes:</h4>
+                      <ul className="space-y-2">
+                        {plan.limitations.map((limitation, limitIndex) => (
+                          <li key={limitIndex} className="flex items-start gap-2">
+                            <div className="w-1 h-1 rounded-full bg-gray-400 mt-2 flex-shrink-0" />
+                            <span className="text-sm text-gray-500">{limitation}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
 
                 {/* Premium CTA */}
-                <button className={`relative w-full py-4 rounded-2xl font-bold text-lg transition-all duration-300 overflow-hidden group/btn ${
+                <button className={`btn relative w-full py-4 rounded-2xl font-bold text-lg transition-all duration-300 overflow-hidden group/btn focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
                   plan.popular
                     ? 'bg-gradient-to-r from-primary-600 to-accent-600 text-white shadow-lg hover:shadow-xl hover:scale-[1.02]'
                     : plan.name === 'Free Forever'
@@ -383,35 +345,44 @@ export default function Pricing() {
           className="mt-24 space-y-16"
         >
           {/* Guarantee Section */}
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-gradient-to-r from-primary-50 via-accent-50 to-primary-50 rounded-3xl p-12 border border-primary-200/50">
-              <div className="text-center space-y-6">
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-lg border border-primary-200">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-h6 font-bold text-gray-800">100% SATISFACTION GUARANTEED</span>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-12 text-white text-center">
+              <div className="space-y-8">
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-green-500 rounded-full">
+                  <Check className="w-5 h-5 text-white" />
+                  <span className="font-bold text-white">PERFORMANCE GUARANTEE</span>
                 </div>
-                
-                <h3 className="text-h2 font-bold text-gray-900 max-w-3xl mx-auto">
-                  Our Promise: No Successful Hire, No Payment
+
+                <h3 className="text-4xl font-black">
+                  We're So Confident, We'll Work For Free
                 </h3>
-                
-                <p className="text-body-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                  We&apos;re so confident in our ability to find the right talent for your team that we guarantee results. 
-                  If we don&apos;t fill your position within the agreed timeframe, you don&apos;t pay a single rupee.
-                </p>
-                
-                <div className="grid md:grid-cols-3 gap-8 pt-8">
-                  <div className="text-center space-y-2">
-                    <div className="text-3xl font-black text-primary-600">15</div>
-                    <div className="text-body-sm text-gray-600">Day free trial</div>
-                  </div>
-                  <div className="text-center space-y-2">
-                    <div className="text-3xl font-black text-accent-600">0%</div>
-                    <div className="text-body-sm text-gray-600">Upfront costs</div>
-                  </div>
-                  <div className="text-center space-y-2">
-                    <div className="text-3xl font-black text-green-600">100%</div>
-                    <div className="text-body-sm text-gray-600">Success rate</div>
+
+                <div className="max-w-2xl mx-auto space-y-6">
+                  <p className="text-xl text-gray-200 leading-relaxed">
+                    If we don't fill your position within 12 days, or if your hire leaves within 90 days,
+                    <span className="text-yellow-400 font-semibold"> we refund every rupee.</span>
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-6 text-left">
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-green-400">What We Guarantee:</h4>
+                      <ul className="space-y-2 text-sm text-gray-300">
+                        <li>✓ Position filled within 12 days</li>
+                        <li>✓ Hire stays minimum 90 days</li>
+                        <li>✓ Free replacement if they leave</li>
+                        <li>✓ Full refund if we fail</li>
+                      </ul>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-yellow-400">Your Investment:</h4>
+                      <ul className="space-y-2 text-sm text-gray-300">
+                        <li>✓ ₹0 upfront costs</li>
+                        <li>✓ No retainer fees</li>
+                        <li>✓ No hidden charges</li>
+                        <li>✓ Pay only for results</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -419,29 +390,30 @@ export default function Pricing() {
           </div>
 
           {/* Enterprise CTA */}
-          <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
             <div className="space-y-4">
-              <h3 className="text-h2 font-bold text-gray-900">
-                Need a Custom Solution?
+              <h3 className="text-3xl font-bold text-gray-900">
+                Still Not Sure? Let's Talk.
               </h3>
-              <p className="text-body-lg text-gray-600 max-w-2xl mx-auto">
-                For large enterprises or unique hiring requirements, we offer completely customized recruitment solutions 
-                tailored to your specific needs and industry.
+              <p className="text-lg text-gray-600">
+                Book a 15-minute call to discuss your specific hiring challenges.
+                <span className="block mt-2 font-semibold">No sales pitch, just honest advice.</span>
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
-                Book Strategy Call
+              <button className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                Book Free Consultation
               </button>
-              <button className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold text-lg hover:border-primary-400 hover:bg-primary-50 transition-all duration-300">
-                Request Custom Quote
+              <button className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold text-lg hover:border-primary-300 hover:bg-primary-50 transition-all duration-300">
+                Calculate Your Savings
               </button>
             </div>
-            
-            <p className="text-body-sm text-gray-500">
-              🔒 No spam, no sales pressure. Just honest advice from hiring experts.
-            </p>
+
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+              <Shield className="w-4 h-4" />
+              <span>15-minute consultation • Zero commitment • Actionable insights guaranteed</span>
+            </div>
           </div>
         </motion.div>
       </div>

@@ -1,10 +1,12 @@
 'use client'
 
-import { 
-  Zap, Shield, Target, Brain, 
-  CheckCircle, ArrowRight
+import {
+  Zap, Shield, Target, Brain,
+  CheckCircle, ArrowRight, TrendingUp,
+  Clock, Users, DollarSign, Globe
 } from 'lucide-react'
 import { useScrollAnimation, useStaggeredAnimation, scrollAnimationClasses } from '@/hooks/use-scroll-animation'
+import Image from 'next/image'
 
 const solutionFeatures = [
   {
@@ -23,9 +25,9 @@ const solutionFeatures = [
   },
   {
     icon: Shield,
-    title: 'Lifetime Guarantee',
-    subtitle: 'Your Success, Our Responsibility',
-    description: 'Industry-first lifetime replacement guarantee. If any hire leaves within 2 years, we find and place a replacement at zero cost.',
+    title: 'Full Responsibility Guarantee',
+    subtitle: 'We Own The Outcome',
+    description: 'Unlike agencies that disappear after payment, we monitor every placement for 2 years. If they leave, we replace them free. Your success is our responsibility.',
     color: 'from-green-500 to-emerald-600',
     bgColor: 'from-green-50 to-emerald-50',
     metrics: [
@@ -66,12 +68,54 @@ const solutionFeatures = [
 ]
 
 const solutionBenefits = [
-  { icon: '💰', title: 'Cost Reduction', value: '60%', desc: 'Lower hiring costs vs traditional agencies' },
-  { icon: '⚡', title: 'Speed Boost', value: '5x', desc: 'Faster placement than market average' },
-  { icon: '🎯', title: 'Success Rate', value: '98%', desc: 'Successful placements that last' },
-  { icon: '🔄', title: 'Retention', value: '89%', desc: 'Hires stay 2+ years' },
-  { icon: '🌍', title: 'Coverage', value: '28', desc: 'Indian states covered' },
-  { icon: '🚀', title: 'Growth', value: '3x', desc: 'Scale your team faster' }
+  {
+    icon: DollarSign,
+    title: 'Cost Reduction',
+    value: '60%',
+    desc: 'Lower hiring costs vs traditional agencies',
+    color: 'from-green-500 to-emerald-600',
+    bgColor: 'from-green-50 to-emerald-50'
+  },
+  {
+    icon: Clock,
+    title: 'Speed Boost',
+    value: '5x',
+    desc: 'Faster placement than market average',
+    color: 'from-blue-500 to-blue-600',
+    bgColor: 'from-blue-50 to-blue-50'
+  },
+  {
+    icon: Target,
+    title: 'Success Rate',
+    value: '98%',
+    desc: 'Successful placements that last',
+    color: 'from-purple-500 to-purple-600',
+    bgColor: 'from-purple-50 to-purple-50'
+  },
+  {
+    icon: Users,
+    title: 'Retention',
+    value: '89%',
+    desc: 'Hires stay 2+ years',
+    color: 'from-indigo-500 to-indigo-600',
+    bgColor: 'from-indigo-50 to-indigo-50'
+  },
+  {
+    icon: Globe,
+    title: 'Coverage',
+    value: '28',
+    desc: 'Indian states covered',
+    color: 'from-teal-500 to-teal-600',
+    bgColor: 'from-teal-50 to-teal-50'
+  },
+  {
+    icon: TrendingUp,
+    title: 'Growth',
+    value: '3x',
+    desc: 'Scale your team faster',
+    color: 'from-orange-500 to-orange-600',
+    bgColor: 'from-orange-50 to-orange-50'
+  }
 ]
 
 export default function Solution() {
@@ -80,7 +124,7 @@ export default function Solution() {
   const { containerRef: benefitsRef, visibleItems: benefitsVisible } = useStaggeredAnimation(solutionBenefits.length, { delay: 600 })
 
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-background to-gray-50/50">
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-background z-20">
       {/* Sophisticated Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-primary-200/20 to-accent-200/15 rounded-full filter blur-3xl" />
@@ -101,26 +145,38 @@ export default function Solution() {
 
       <div className="container px-6 mx-auto">
         {/* Premium Header */}
-        <div
-          ref={headerRef}
-          className={`max-w-5xl mx-auto text-center mb-24 ${scrollAnimationClasses.fadeUp(headerVisible)}`}
-        >
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
+          <div
+            ref={headerRef}
+            className={`space-y-6 ${scrollAnimationClasses.fadeUp(headerVisible)}`}
+          >
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 mb-8">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <span className="text-sm font-bold tracking-wide">THE INTAKESENSE ADVANTAGE</span>
           </div>
           
           <h2 className="solution-title text-display-md md:text-display-lg font-black mb-8 leading-none">
-            <span className="text-gray-900">How We
-            <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 bg-clip-text text-transparent"> Transform </span>
+            <span className="text-gray-900">Our
+            <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 bg-clip-text text-transparent"> Solution</span>
             </span><br />
-            <span className="text-gray-700">Your Hiring Process</span>
+            <span className="text-gray-700">AI-Powered Recruitment</span>
           </h2>
-          
-          <p className="text-lead text-gray-600 leading-relaxed max-w-4xl mx-auto">
-            We don&apos;t just find candidates—we engineer perfect matches using advanced AI,
-            human expertise, and India&apos;s largest verified talent network.
-          </p>
+
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Advanced AI meets human expertise to deliver faster, more accurate hiring with guaranteed results.
+            </p>
+          </div>
+
+          {/* Solution Illustration */}
+          <div className={`flex justify-center ${scrollAnimationClasses.fadeUp(headerVisible)}`}>
+            <Image
+              src="/illustrations/undraw_solution-mindset_pit7.svg"
+              alt="Smart Solutions"
+              width={400}
+              height={300}
+              className="w-full h-auto max-w-md"
+            />
+          </div>
         </div>
 
         {/* Premium Feature Showcase */}
@@ -223,39 +279,6 @@ export default function Solution() {
                         ))}
                       </div>
 
-                      {/* Visual Progress Bars */}
-                      <div className="space-y-4">
-                        {feature.metrics.map((metric, idx) => {
-                          // Calculate progress width based on metric value
-                          const getProgressWidth = (value: string) => {
-                            if (value.includes('%')) return value;
-                            if (value === '₹0') return '100%';
-                            if (value === '500+') return '85%';
-                            if (value === '12') return '95%'; // 12 days is very fast
-                            if (value === '48hr') return '90%';
-                            if (value.includes('x')) return '80%';
-                            return '90%'; // default fallback
-                          };
-                          
-                          return (
-                            <div key={idx} className="space-y-2">
-                              <div className="flex justify-between items-center">
-                                <span className="text-body-sm font-medium text-gray-700">{metric.label}</span>
-                                <span className="text-body-sm font-bold text-gray-900">{metric.value}</span>
-                              </div>
-                              <div className="h-3 bg-gray-200 rounded-full overflow-hidden relative">
-                                <div
-                                  className={`h-full bg-gradient-to-r ${feature.color} rounded-full transition-all duration-1000 ease-out`}
-                                  style={{ 
-                                    width: isVisible ? getProgressWidth(metric.value) : '0%',
-                                    transitionDelay: `${0.5 + idx * 0.3}s`
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -270,11 +293,10 @@ export default function Solution() {
           {/* Section Header */}
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h3 className="text-h2 font-bold text-gray-900">
-              Measurable Results That Matter
+              Proven Results
             </h3>
-            <p className="text-body-lg text-gray-600 leading-relaxed">
-            Don&apos;t just take our word for it. Here are the real, measurable improvements
-              our clients see within the first 90 days.
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Real performance metrics from clients using our platform.
             </p>
           </div>
 
@@ -289,19 +311,24 @@ export default function Solution() {
                   className={`benefit-item group relative p-8 bg-white rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl transition-all duration-500 ${scrollAnimationClasses.scaleIn(isVisible)}`}
                 >
                 {/* Background gradient on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-accent-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`} />
                 
-                <div className="relative text-center space-y-4">
-                  <div className="text-4xl mb-4">{benefit.icon}</div>
-                  
-                  <div className="space-y-2">
-                    <div className="text-3xl lg:text-4xl font-black text-gray-900">
+                <div className="relative text-center space-y-6">
+                  {/* Professional Icon */}
+                  <div className="flex justify-center mb-6">
+                    <div className={`p-4 rounded-2xl bg-gradient-to-br ${benefit.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <benefit.icon className="w-8 h-8" strokeWidth={2} />
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="text-4xl lg:text-5xl font-black text-gray-900">
                       {benefit.value}
                     </div>
-                    <div className="text-h6 font-bold text-gray-800">
+                    <div className="text-h5 font-bold text-gray-800">
                       {benefit.title}
                     </div>
-                    <div className="text-body-sm text-gray-600">
+                    <div className="text-body-sm text-gray-600 leading-relaxed">
                       {benefit.desc}
                     </div>
                   </div>
@@ -329,11 +356,10 @@ export default function Solution() {
               <div className="relative space-y-8">
                 <div className="space-y-4">
                   <h3 className="text-h2 md:text-h1 font-black leading-tight">
-                    Ready to Transform Your Hiring?
+                    Start Hiring Smarter Today
                   </h3>
-                  <p className="text-body-lg md:text-lead opacity-90 max-w-3xl mx-auto">
-                    Join 500+ Indian companies that have revolutionized their recruitment process. 
-                    Start your 15-day free trial today—no commitments, no setup fees.
+                  <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
+                    Join 1,200+ companies using AI-powered recruitment. Guaranteed results or it&apos;s free.
                   </p>
                 </div>
 
