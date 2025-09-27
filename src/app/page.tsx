@@ -1,6 +1,5 @@
 'use client'
 
-import { SmoothScrollProvider } from '@/providers/smooth-scroll-provider'
 import { Header } from '@/components/ui/header'
 import Hero from '@/components/sections/hero'
 import Problem from '@/components/sections/problem'
@@ -11,7 +10,7 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <SmoothScrollProvider>
+    <>
       <OrganizationJsonLd />
       <WebsiteJsonLd />
       <Header />
@@ -47,6 +46,6 @@ export default function Home() {
           </div>
         </footer>
       </main>
-    </SmoothScrollProvider>
+    </>
   )
 }
