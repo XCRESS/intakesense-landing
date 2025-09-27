@@ -88,20 +88,37 @@
 :root {
   --radius: 0.75rem;
   
-  /* Premium Typography Scale */
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-base: 1rem;     /* 16px */
-  --font-size-lg: 1.125rem;   /* 18px */
-  --font-size-xl: 1.25rem;    /* 20px */
-  --font-size-2xl: 1.5rem;    /* 24px */
-  --font-size-3xl: 1.875rem;  /* 30px */
-  --font-size-4xl: 2.25rem;   /* 36px */
-  --font-size-5xl: 3rem;      /* 48px */
-  --font-size-6xl: 3.75rem;   /* 60px */
-  --font-size-7xl: 4.5rem;    /* 72px */
-  --font-size-8xl: 6rem;      /* 96px */
-  --font-size-9xl: 8rem;      /* 128px */
+  /* Mobile-First Typography Scale */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px - mobile base */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px - mobile h1 */
+  --font-size-4xl: 2.25rem;    /* 36px - mobile display */
+  --font-size-5xl: 2.5rem;     /* 40px - mobile hero (reduced) */
+  --font-size-6xl: 3rem;       /* 48px - tablet hero */
+  --font-size-7xl: 3.75rem;    /* 60px - desktop hero */
+  --font-size-8xl: 4.5rem;     /* 72px - large desktop */
+  --font-size-9xl: 6rem;       /* 96px - xl desktop */
+
+  /* Mobile-First Spacing Scale */
+  --space-xs: 0.25rem;         /* 4px */
+  --space-sm: 0.5rem;          /* 8px */
+  --space-md: 0.75rem;         /* 12px */
+  --space-lg: 1rem;            /* 16px */
+  --space-xl: 1.5rem;          /* 24px */
+  --space-2xl: 2rem;           /* 32px */
+  --space-3xl: 2.5rem;         /* 40px */
+  --space-4xl: 3rem;           /* 48px */
+  --space-5xl: 4rem;           /* 64px */
+  --space-6xl: 5rem;           /* 80px */
+
+  /* Mobile Touch Targets */
+  --touch-target-min: 44px;    /* Minimum touch target */
+  --touch-target-comfortable: 48px; /* Comfortable touch target */
+  --touch-target-large: 56px;  /* Large touch target */
   
   /* Premium Line Heights */
   --line-height-none: 1;
@@ -252,90 +269,226 @@
     text-rendering: optimizeLegibility;
   }
   
-  /* Premium Typography Hierarchy */
+  /* Mobile-First Typography Hierarchy */
   .text-display-2xl {
-    font-size: var(--font-size-9xl);
-    line-height: var(--line-height-none);
-    letter-spacing: var(--letter-spacing-tighter);
+    font-size: var(--font-size-6xl);  /* Start smaller on mobile */
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
     font-weight: 800;
   }
-  
+
+  @media (min-width: 768px) {
+    .text-display-2xl {
+      font-size: var(--font-size-8xl);
+      line-height: var(--line-height-none);
+      letter-spacing: var(--letter-spacing-tighter);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .text-display-2xl {
+      font-size: var(--font-size-9xl);
+    }
+  }
+
   .text-display-xl {
-    font-size: var(--font-size-8xl);
-    line-height: var(--line-height-none);
-    letter-spacing: var(--letter-spacing-tighter);
+    font-size: var(--font-size-5xl);  /* Start smaller on mobile */
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
     font-weight: 800;
   }
-  
+
+  @media (min-width: 768px) {
+    .text-display-xl {
+      font-size: var(--font-size-7xl);
+      line-height: var(--line-height-none);
+      letter-spacing: var(--letter-spacing-tighter);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .text-display-xl {
+      font-size: var(--font-size-8xl);
+    }
+  }
+
   .text-display-lg {
-    font-size: var(--font-size-7xl);
+    font-size: var(--font-size-4xl);  /* Mobile friendly */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 700;
   }
-  
+
+  @media (min-width: 768px) {
+    .text-display-lg {
+      font-size: var(--font-size-6xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .text-display-lg {
+      font-size: var(--font-size-7xl);
+    }
+  }
+
   .text-display-md {
-    font-size: var(--font-size-6xl);
+    font-size: var(--font-size-3xl);  /* Mobile friendly */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 700;
   }
-  
+
+  @media (min-width: 768px) {
+    .text-display-md {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .text-display-md {
+      font-size: var(--font-size-6xl);
+    }
+  }
+
   .text-display-sm {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-2xl);  /* Mobile friendly */
     line-height: var(--line-height-snug);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 600;
   }
-  
-  /* Heading styles with perfect optical sizing */
+
+  @media (min-width: 768px) {
+    .text-display-sm {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .text-display-sm {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  /* Mobile-First Heading styles */
   h1, .text-h1 {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-3xl);  /* Mobile friendly */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 700;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
-  
+
+  @media (min-width: 768px) {
+    h1, .text-h1 {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h1, .text-h1 {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
   h2, .text-h2 {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-2xl);  /* Mobile friendly */
     line-height: var(--line-height-snug);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 600;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
-  
+
+  @media (min-width: 768px) {
+    h2, .text-h2 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h2, .text-h2 {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
   h3, .text-h3 {
-    font-size: var(--font-size-3xl);
+    font-size: var(--font-size-xl);   /* Mobile friendly */
     line-height: var(--line-height-snug);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 600;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
-  
+
+  @media (min-width: 768px) {
+    h3, .text-h3 {
+      font-size: var(--font-size-2xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h3, .text-h3 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+
   h4, .text-h4 {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-lg);   /* Mobile friendly */
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 600;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
-  
+
+  @media (min-width: 768px) {
+    h4, .text-h4 {
+      font-size: var(--font-size-xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h4, .text-h4 {
+      font-size: var(--font-size-2xl);
+    }
+  }
+
   h5, .text-h5 {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-base); /* Mobile friendly */
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 500;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
-  
+
+  @media (min-width: 768px) {
+    h5, .text-h5 {
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h5, .text-h5 {
+      font-size: var(--font-size-xl);
+    }
+  }
+
   h6, .text-h6 {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-sm);   /* Mobile friendly */
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-wide);
     font-weight: 500;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
     text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    h6, .text-h6 {
+      font-size: var(--font-size-base);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h6, .text-h6 {
+      font-size: var(--font-size-lg);
+    }
   }
   
   /* Body text variations */
@@ -376,17 +529,57 @@
     will-change: transform;
   }
 
-  /* Performance optimizations */
-  .animate-element {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-  }
+/* Performance optimizations */
+.animate-element {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
 
-  .gpu-accelerated {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-  }
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth scroll animation utilities */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 100ms; }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 200ms; }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 300ms; }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 400ms; }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 500ms; }
+
+.stagger-children.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optimized transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.smooth-hover:hover {
+  transform: translateY(-2px);
+}
 
   /* Accessible focus states */
   button:focus-visible,
@@ -684,10 +877,22 @@
   will-change: transform;
 }
 
-/* Smooth scroll behavior */
+/* Optimized scroll behavior */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Changed from smooth for better performance */
   scroll-padding-top: 80px;
+}
+
+/* Prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom scrollbar */

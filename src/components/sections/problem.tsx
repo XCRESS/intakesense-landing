@@ -1,13 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { TrendingDown, Users, Clock, AlertCircle } from 'lucide-react'
-import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const problems = [
   {
@@ -18,7 +12,7 @@ const problems = [
     description: 'Indian companies face higher employee turnover than global average',
     color: 'from-red-500 to-red-600',
     bgColor: 'from-red-50 to-red-100',
-    impact: 'Loss of ₹12L+ per employee',
+    impact: 'Loss of ₹5L+ per employee',
   },
   {
     icon: Clock,
@@ -32,7 +26,7 @@ const problems = [
   },
   {
     icon: TrendingDown,
-    stat: '8.5',
+    stat: '2.5',
     unit: ' Lakhs',
     label: 'Cost Per Hire',
     description: 'Total recruitment expense including hidden costs',
@@ -53,65 +47,15 @@ const problems = [
 ]
 
 export default function Problem() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const statsRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
-
-  useEffect(() => {
-    if (!statsRef.current) return
-
-    const ctx = gsap.context(() => {
-      // Animate stats when they come into view
-      const stats = statsRef.current?.querySelectorAll('.stat-number')
-      
-      stats?.forEach((stat, index) => {
-        const finalValue = stat.getAttribute('data-value') || '0'
-        const isPercentage = finalValue.includes('%')
-        const isCurrency = finalValue.includes('$')
-        const numericValue = parseFloat(finalValue.replace(/[^0-9.-]/g, ''))
-
-        ScrollTrigger.create({
-          trigger: stat,
-          start: 'top 80%',
-          onEnter: () => {
-            gsap.from(stat, {
-              textContent: 0,
-              duration: 1.2,
-              delay: index * 0.08,
-              ease: 'power2.out',
-              snap: { textContent: 1 },
-              onUpdate: function() {
-                const progress = this.progress()
-                const currentValue = Math.floor(numericValue * progress)
-                if (isCurrency) {
-                  stat.textContent = `$${currentValue.toLocaleString()}`
-                } else if (isPercentage) {
-                  stat.textContent = `${currentValue}%`
-                } else {
-                  stat.textContent = currentValue.toString()
-                }
-              },
-              onComplete: () => {
-                stat.textContent = finalValue
-              }
-            })
-          },
-          once: true,
-        })
-      })
-
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden bg-background z-20">
+    <section
+      className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background px-4 sm:px-6"
+    >
       {/* Sophisticated Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="problem-bg-1 absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-200/30 to-orange-200/20 rounded-full filter blur-3xl" />
-        <div className="problem-bg-2 absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-purple-200/20 to-pink-200/30 rounded-full filter blur-3xl" />
-        
+        <div className="problem-bg-1 absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-100/20 to-orange-100/20 rounded-full" />
+        <div className="problem-bg-2 absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-purple-100/20 to-pink-100/20 rounded-full" />
+
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 opacity-[0.02]">
           <svg width="60" height="60" viewBox="0 0 60 60" className="w-full h-full">
@@ -125,111 +69,94 @@ export default function Problem() {
         </div>
       </div>
 
-      <div className="container px-6 mx-auto">
+      <div className="container mx-auto">
         {/* Premium Header */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 border border-red-200 text-red-700 mb-6">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 sm:mb-16 lg:mb-20">
+          <div className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-red-50 border border-red-200 text-red-700 mb-4 sm:mb-6">
             <AlertCircle className="w-4 h-4" />
-            <span className="text-sm font-semibold tracking-wide">CURRENT STATE OF HIRING IN INDIA</span>
+            <span className="text-xs sm:text-sm font-semibold tracking-wide">CURRENT STATE OF HIRING IN INDIA</span>
           </div>
-          
-          <h2 className="text-display-md md:text-display-lg font-black mb-6 leading-none">
+
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 sm:mb-6 leading-[1.1]">
             The <span className="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">Hiring Problem</span><br />
             <span className="text-gray-700">Facing Indian Companies</span>
           </h2>
 
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Traditional recruitment is broken. High costs, long delays, and poor retention are holding businesses back.
             </p>
-          </motion.div>
+          </div>
 
           {/* Problem Illustration */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center"
-          >
+          <div className="flex justify-center order-1 lg:order-2">
             <Image
               src="/illustrations/undraw_time-management_4ss6.svg"
               alt="Time Management Crisis"
               width={400}
               height={300}
-              className="w-full h-auto max-w-md"
+              style={{ width: "auto", height: "auto" }}
+              className="max-w-[200px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-md"
             />
-          </motion.div>
+          </div>
         </div>
 
-        {/* Premium Data Visualization Grid */}
-        <div ref={statsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        {/* Data Visualization Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto">
           {problems.map((problem, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.15, ease: 'backOut' }}
               className="group relative"
             >
               {/* Main Card */}
-              <div className="relative p-8 bg-white rounded-3xl border border-gray-200/60 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-gray-300">
+              <div className="relative p-4 sm:p-6 lg:p-8 bg-white rounded-2xl sm:rounded-3xl border border-gray-200">
                 {/* Dynamic gradient background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${problem.bgColor} opacity-0 group-hover:opacity-100 transition-all duration-500`} />
-                
+                <div className={`absolute inset-0 bg-gradient-to-br ${problem.bgColor} opacity-0`} />
+
                 {/* Animated corner accent */}
                 <div className="absolute top-0 right-0 w-20 h-20 opacity-60">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${problem.color} opacity-10 rounded-bl-[100px] group-hover:opacity-20 transition-opacity duration-500`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${problem.color} opacity-10 rounded-bl-[100px]`} />
                 </div>
-                
+
                 {/* Icon with dynamic background */}
-                <div className="relative mb-6">
-                  <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${problem.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <problem.icon className="w-7 h-7" />
+                <div className="relative mb-4 sm:mb-6">
+                  <div className={`inline-flex p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${problem.color} text-white`}>
+                    <problem.icon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
                   </div>
                 </div>
 
                 {/* Animated Statistics */}
-                <div className="relative mb-4 space-y-1">
+                <div className="relative mb-3 sm:mb-4 space-y-1">
                   <div className="flex items-baseline gap-1">
-                    <span 
-                      className="stat-number text-4xl lg:text-5xl font-black text-gray-900"
-                      data-value={problem.stat.replace(/[^0-9.]/g, '')}
-                    >
-                      0
+                    <span className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-gray-900">
+                      {problem.stat}
                     </span>
-                    <span className="text-2xl font-bold text-gray-600">{problem.unit}</span>
+                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-600">{problem.unit}</span>
                   </div>
-                  
+
                   {/* Progress bar visualization */}
-                  <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                    <motion.div
+                  <div className="h-1.5 bg-gray-200 rounded-full">
+                    <div
                       className={`h-full bg-gradient-to-r ${problem.color} rounded-full`}
-                      initial={{ width: '0%' }}
-                      animate={isInView ? { width: `${problem.stat.includes('%') ? problem.stat.replace('%', '') : '75'}%` } : {}}
-                      transition={{ duration: 1.2, delay: index * 0.15 + 0.8 }}
+                      style={{ width: `${problem.stat.includes('%') ? problem.stat.replace('%', '') : '75'}%` }}
                     />
                   </div>
                 </div>
 
                 {/* Label and Description */}
-                <div className="relative space-y-3">
-                  <h3 className="text-h6 font-bold text-gray-800 group-hover:text-gray-900">
+                <div className="relative space-y-2 sm:space-y-3">
+                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800 group-hover:text-gray-900">
                     {problem.label}
                   </h3>
-                  
-                  <p className="text-body-sm text-gray-600 leading-relaxed">
+
+                  <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">
                     {problem.description}
                   </p>
-                  
+
                   {/* Impact indicator */}
-                  <div className="pt-3 border-t border-gray-100">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <div className="pt-2 sm:pt-3 border-t border-gray-100">
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-400 flex-shrink-0" />
                       <span className="text-xs font-semibold text-red-600 uppercase tracking-wide">
                         {problem.impact}
                       </span>
@@ -238,22 +165,17 @@ export default function Problem() {
                 </div>
 
                 {/* Sophisticated hover effect */}
-                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 rounded-3xl opacity-0 pointer-events-none">
                   <div className={`absolute inset-0 bg-gradient-to-br ${problem.color} opacity-5 rounded-3xl`} />
                   <div className="absolute inset-[-1px] bg-gradient-to-r from-transparent via-gray-300 to-transparent rounded-3xl opacity-30" />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Premium Story Continuation & CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="max-w-4xl mx-auto text-center mt-24 space-y-12"
-        >
+        {/* Story Continuation & CTA */}
+        <div className="max-w-4xl mx-auto text-center mt-24 space-y-12">
           {/* Impact Statement */}
           <div className="space-y-6">
             <h3 className="text-h2 md:text-h1 font-bold text-gray-800">
@@ -264,23 +186,21 @@ export default function Problem() {
               While you struggle with traditional hiring, competitors using AI-powered recruitment are scaling faster and hiring better talent.
             </p>
           </div>
-          
+
           {/* Key Impact Metrics */}
           <div className="grid md:grid-cols-3 gap-8 py-12">
-            <div className="text-center space-y-2">
-              <div className="text-3xl font-black text-red-600">₹50L+</div>
-              <div className="text-body-sm text-gray-600">Annual loss per unfilled position</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl font-black text-orange-600">40%</div>
-              <div className="text-body-sm text-gray-600">Productivity drop during vacancies</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl font-black text-purple-600">85%</div>
-              <div className="text-body-sm text-gray-600">Companies miss growth targets</div>
-            </div>
+            {[
+              { value: '₹15L+', label: 'Annual loss per unfilled position', color: 'text-red-600' },
+              { value: '40%', label: 'Productivity drop during vacancies', color: 'text-orange-600' },
+              { value: '85%', label: 'Companies miss growth targets', color: 'text-purple-600' }
+            ].map((metric, index) => (
+              <div key={index} className="text-center space-y-2">
+                <div className={`text-3xl font-black ${metric.color}`}>{metric.value}</div>
+                <div className="text-body-sm text-gray-600">{metric.label}</div>
+              </div>
+            ))}
           </div>
-          
+
           {/* Transition Element */}
           <div className="relative py-8">
             <div className="absolute inset-0 flex items-center">
@@ -294,7 +214,7 @@ export default function Problem() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

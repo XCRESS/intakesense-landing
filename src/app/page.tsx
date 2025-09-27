@@ -6,13 +6,16 @@ import Hero from '@/components/sections/hero'
 import Problem from '@/components/sections/problem'
 import Solution from '@/components/sections/solution'
 import Pricing from '@/components/sections/pricing'
+import { OrganizationJsonLd, WebsiteJsonLd } from '@/components/seo/json-ld'
 import Image from 'next/image'
 
 export default function Home() {
   return (
     <SmoothScrollProvider>
+      <OrganizationJsonLd />
+      <WebsiteJsonLd />
       <Header />
-      <main className="relative pt-20">
+      <main className="relative">
         <Hero />
         <Problem />
         <Solution />

@@ -1,13 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Check, Sparkles, Zap, Crown, Shield } from 'lucide-react'
-import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const pricingPlans = [
   {
@@ -32,13 +26,13 @@ const pricingPlans = [
     cta: 'Start Free Trial',
     popular: false,
     badge: '100% FREE',
-    savings: 'Save ₹2-5L vs traditional agencies'
+    savings: 'Save ₹1-3L vs traditional agencies'
   },
   {
     name: 'Growth',
-    price: '₹1.2L',
+    price: '₹80K',
     period: 'per successful hire',
-    description: 'Scale your team without the hiring headache',
+    description: 'Perfect for growing SMEs and mid-sized companies',
     icon: Zap,
     color: 'from-primary-500 to-primary-600',
     bgColor: 'from-primary-50 to-blue-50',
@@ -50,7 +44,7 @@ const pricingPlans = [
       'Salary negotiation included'
     ],
     businessImpact: {
-      roi: '320% average ROI in Year 1',
+      roi: '150% average ROI in Year 1',
       cost: '60% less than traditional agencies',
       speed: '5x faster than internal hiring'
     },
@@ -87,55 +81,19 @@ const pricingPlans = [
 ]
 
 export default function Pricing() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const cardsRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 })
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Animate pricing cards
-      const cards = gsap.utils.toArray<HTMLElement>('.pricing-card')
-      
-      cards.forEach((card, index) => {
-        gsap.fromTo(
-          card,
-          {
-            y: 30,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 85%',
-            },
-            delay: index * 0.1,
-          }
-        )
-      })
-
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-32 bg-white">
+    <section
+      className="relative py-24 lg:py-32 bg-white"
+    >
       {/* Clean Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
       </div>
 
       <div className="container px-6 mx-auto">
-        {/* Clean Header */}
+        {/* Header */}
         <div className="max-w-4xl mx-auto text-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+          <div
             className="space-y-6"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-200 text-primary-700 mb-6">
@@ -143,20 +101,20 @@ export default function Pricing() {
               <span className="text-sm font-semibold tracking-wide">INDIA&apos;S MOST AFFORDABLE RECRUITMENT SOLUTION</span>
             </div>
 
-            <h2 className="text-5xl md:text-6xl font-black mb-6 leading-none text-gray-900">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] text-gray-900">
               Stop Wasting Money on
               <span className="block text-red-600">Failed Hires</span>
             </h2>
 
-            <p className="text-2xl text-gray-600 leading-relaxed mb-8">
-              Traditional agencies charge ₹2-5L upfront, then disappear.
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed mb-8">
+              Traditional agencies charge ₹1-3L upfront, then disappear.
               <span className="block mt-2 font-semibold text-gray-900">We only get paid when your hire completes 90 days.</span>
             </p>
 
             <div className="bg-red-50 border border-red-200 rounded-xl p-6 mb-8">
               <h3 className="text-lg font-bold text-red-800 mb-2">The Hidden Cost of Empty Desks:</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-red-700">
-                <div>• ₹50L+ revenue loss per unfilled position</div>
+                <div>• ₹15L+ revenue loss per unfilled position</div>
                 <div>• 40% productivity drop in affected teams</div>
                 <div>• 6-8 months average hiring time</div>
                 <div>• 64% of hires fail within 18 months</div>
@@ -182,38 +140,34 @@ export default function Pricing() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Pricing Illustration */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center"
-          >
+          <div className="flex justify-center">
             <Image
               src="/illustrations/undraw_growth-analytics_bhy7.svg"
               alt="Growth Analytics"
               width={400}
               height={300}
-              className="w-full h-auto max-w-md"
+              style={{ width: "auto", height: "auto" }}
+              className="max-w-md"
             />
-          </motion.div>
+          </div>
         </div>
 
-        {/* Premium Pricing Cards */}
-        <div ref={cardsRef} className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto" style={{ perspective: '1000px' }}>
+        {/* Pricing Cards */}
+        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <div
               key={index}
-              className={`pricing-card group relative ${
+              className={`group relative ${
                 plan.popular ? 'lg:scale-105 lg:-mt-4' : ''
               }`}
             >
-              {/* Premium Badge */}
+              {/* Badge */}
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-10">
                 <div className={`px-4 py-2 text-xs font-bold tracking-wider rounded-full border-2 ${
-                  plan.popular 
+                  plan.popular
                     ? 'bg-gradient-to-r from-primary-600 to-accent-600 text-white border-white shadow-lg'
                     : plan.name === 'Free Forever'
                     ? 'bg-green-500 text-white border-green-400 shadow-md'
@@ -224,22 +178,22 @@ export default function Pricing() {
               </div>
 
               <div className={`relative p-8 lg:p-10 bg-white rounded-3xl border-2 ${
-                plan.popular 
-                  ? 'border-primary-200 shadow-2xl shadow-primary-100/50' 
+                plan.popular
+                  ? 'border-primary-200 shadow-2xl shadow-primary-100/50'
                   : 'border-gray-200 group-hover:border-primary-200 group-hover:shadow-xl'
-              } overflow-hidden h-full flex flex-col transition-all duration-500`}>
-                
+              } h-full flex flex-col`}>
+
                 {/* Sophisticated background gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${plan.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                
+                <div className={`absolute inset-0 bg-gradient-to-br ${plan.bgColor} opacity-0`} />
+
                 {/* Animated corner accent */}
                 <div className="absolute top-0 right-0 w-24 h-24 opacity-20">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${plan.color} rounded-bl-full group-hover:scale-110 transition-transform duration-500`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${plan.color} rounded-bl-full`} />
                 </div>
 
                 {/* Icon with premium styling */}
                 <div className="relative mb-8">
-                  <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${plan.color} text-white shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-300`}>
+                  <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${plan.color} text-white shadow-lg`}>
                     <plan.icon className="w-8 h-8 text-white relative z-10" strokeWidth={2} />
                   </div>
                 </div>
@@ -293,7 +247,10 @@ export default function Pricing() {
                     <h4 className="font-semibold text-gray-900 mb-4">What You Get:</h4>
                     <ul className="space-y-3">
                       {plan.outcomes.map((outcome, outcomeIndex) => (
-                        <li key={outcomeIndex} className="flex items-start gap-3">
+                        <li
+                          key={outcomeIndex}
+                          className="flex items-start gap-3"
+                        >
                           <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                             <Check className="w-3 h-3 text-green-600" />
                           </div>
@@ -318,17 +275,19 @@ export default function Pricing() {
                   )}
                 </div>
 
-                {/* Premium CTA */}
-                <button className={`btn relative w-full py-4 rounded-2xl font-bold text-lg transition-all duration-300 overflow-hidden group/btn focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
-                  plan.popular
-                    ? 'bg-gradient-to-r from-primary-600 to-accent-600 text-white shadow-lg hover:shadow-xl hover:scale-[1.02]'
-                    : plan.name === 'Free Forever'
-                    ? 'bg-green-500 text-white shadow-md hover:bg-green-600 hover:shadow-lg hover:scale-[1.02]'
-                    : 'bg-gray-800 text-white shadow-md hover:bg-gray-900 hover:shadow-lg hover:scale-[1.02]'
-                }`}>
+                {/* CTA */}
+                <button
+                  className={`btn relative w-full py-4 rounded-2xl font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
+                    plan.popular
+                      ? 'bg-gradient-to-r from-primary-600 to-accent-600 text-white shadow-lg'
+                      : plan.name === 'Trial'
+                      ? 'bg-green-500 text-white shadow-md'
+                      : 'bg-gray-800 text-white shadow-md'
+                  }`}
+                >
                   <span className="relative z-10">{plan.cta}</span>
                   {plan.popular && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent-600 to-primary-700 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-accent-600 to-primary-700 opacity-0" />
                   )}
                 </button>
               </div>
@@ -336,13 +295,8 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Premium Bottom Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1, delay: 1 }}
-          className="mt-24 space-y-16"
-        >
+        {/* Bottom Section */}
+        <div className="mt-24 space-y-16">
           {/* Guarantee Section */}
           <div className="max-w-4xl mx-auto">
             <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-12 text-white text-center">
@@ -401,10 +355,10 @@ export default function Pricing() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300">
+              <button className="px-8 py-4 bg-primary-600 text-white rounded-xl font-semibold text-lg shadow-lg">
                 Book Free Consultation
               </button>
-              <button className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold text-lg hover:border-primary-300 hover:bg-primary-50 transition-all duration-300">
+              <button className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold text-lg">
                 Calculate Your Savings
               </button>
             </div>
@@ -414,7 +368,7 @@ export default function Pricing() {
               <span>15-minute consultation • Zero commitment • Actionable insights guaranteed</span>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

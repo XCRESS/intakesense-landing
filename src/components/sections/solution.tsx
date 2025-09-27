@@ -5,7 +5,6 @@ import {
   CheckCircle, ArrowRight, TrendingUp,
   Clock, Users, DollarSign, Globe
 } from 'lucide-react'
-import { useScrollAnimation, useStaggeredAnimation, scrollAnimationClasses } from '@/hooks/use-scroll-animation'
 import Image from 'next/image'
 
 const solutionFeatures = [
@@ -13,14 +12,14 @@ const solutionFeatures = [
     icon: Brain,
     title: 'AI + Human Intelligence',
     subtitle: 'The Perfect Match',
-    description: 'Our proprietary AI scans 50M+ Indian profiles while expert recruiters add the human touch for cultural fit and soft skills assessment.',
+    description: 'Our proprietary AI scans 5M+ Indian profiles while expert recruiters add the human touch for cultural fit and soft skills assessment.',
     color: 'from-primary-500 to-primary-600',
     bgColor: 'from-primary-50 to-blue-50',
     metrics: [
       { label: 'Time Reduction', value: '75%', desc: 'Faster hiring process' },
       { label: 'Match Accuracy', value: '94%', desc: 'Perfect role-candidate fit' }
     ],
-    highlights: ['50M+ candidate database', 'Cultural fit assessment', 'Soft skills evaluation'],
+    highlights: ['5M+ candidate database', 'Cultural fit assessment', 'Soft skills evaluation'],
     processSteps: ['AI Screening', 'Human Verification', 'Cultural Assessment']
   },
   {
@@ -46,7 +45,7 @@ const solutionFeatures = [
     bgColor: 'from-accent-50 to-orange-50',
     metrics: [
       { label: 'Passive Candidates', value: '70%', desc: 'Not actively looking' },
-      { label: 'Top-tier Companies', value: '500+', desc: 'Source companies' }
+      { label: 'Top-tier Companies', value: '250+', desc: 'Source companies' }
     ],
     highlights: ['Passive candidate network', 'Top company sourcing', 'Confidential approach'],
     processSteps: ['Target Identification', 'Discreet Outreach', 'Opportunity Presentation']
@@ -119,12 +118,8 @@ const solutionBenefits = [
 ]
 
 export default function Solution() {
-  const { elementRef: headerRef, isVisible: headerVisible } = useScrollAnimation({ delay: 200 })
-  const { containerRef: featuresRef, visibleItems: featuresVisible } = useStaggeredAnimation(solutionFeatures.length, { delay: 400 })
-  const { containerRef: benefitsRef, visibleItems: benefitsVisible } = useStaggeredAnimation(solutionBenefits.length, { delay: 600 })
-
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden bg-background z-20">
+    <section className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background z-20 px-4 sm:px-6">
       {/* Sophisticated Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-primary-200/20 to-accent-200/15 rounded-full filter blur-3xl" />
@@ -143,53 +138,49 @@ export default function Solution() {
         </div>
       </div>
 
-      <div className="container px-6 mx-auto">
-        {/* Premium Header */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-          <div
-            ref={headerRef}
-            className={`space-y-6 ${scrollAnimationClasses.fadeUp(headerVisible)}`}
+      <div className="container mx-auto">
+        {/* Header */}
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 sm:mb-16 lg:mb-24">
+          <div className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1"
           >
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 mb-8">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm font-bold tracking-wide">THE INTAKESENSE ADVANTAGE</span>
+          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 mb-6 sm:mb-8">
+            <div className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="text-xs sm:text-sm font-bold tracking-wide">THE INTAKESENSE ADVANTAGE</span>
           </div>
-          
-          <h2 className="solution-title text-display-md md:text-display-lg font-black mb-8 leading-none">
+
+          <h2 className="solution-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 leading-[1.1]">
             <span className="text-gray-900">Our
             <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 bg-clip-text text-transparent"> Solution</span>
             </span><br />
             <span className="text-gray-700">AI-Powered Recruitment</span>
           </h2>
 
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Advanced AI meets human expertise to deliver faster, more accurate hiring with guaranteed results.
             </p>
           </div>
 
           {/* Solution Illustration */}
-          <div className={`flex justify-center ${scrollAnimationClasses.fadeUp(headerVisible)}`}>
+          <div className="flex justify-center order-1 lg:order-2">
             <Image
               src="/illustrations/undraw_solution-mindset_pit7.svg"
               alt="Smart Solutions"
               width={400}
               height={300}
-              className="w-full h-auto max-w-md"
+              style={{ width: "auto", height: "auto" }}
+              className="max-w-[200px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-md"
             />
           </div>
         </div>
 
-        {/* Premium Feature Showcase */}
-        <div ref={featuresRef} className="space-y-20 mb-24">
-          {solutionFeatures.map((feature, index) => {
-            const isVisible = featuresVisible[index]
-            
-            return (
+        {/* Feature Showcase */}
+        <div className="space-y-20 mb-24">
+          {solutionFeatures.map((feature, index) => (
               <div 
                 key={index}
                 className={`feature-card group relative ${
                   index % 2 === 0 ? '' : 'lg:flex-row-reverse'
-                } ${scrollAnimationClasses.fadeUp(isVisible)}`}
+                }`}
               >
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 {/* Feature Content */}
@@ -247,13 +238,13 @@ export default function Solution() {
 
                 {/* Interactive Metrics Dashboard */}
                 <div className="relative">
-                  <div className={`p-8 lg:p-10 bg-white rounded-3xl border-2 border-gray-200 shadow-xl overflow-hidden group-hover:shadow-2xl transition-all duration-500`}>
+                  <div className="p-8 lg:p-10 bg-white rounded-3xl border-2 border-gray-200 shadow-xl">
                     {/* Background gradient */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgColor} opacity-0`} />
                     
                     {/* Animated corner */}
                     <div className="absolute top-0 right-0 w-24 h-24 opacity-30">
-                      <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} rounded-bl-full group-hover:scale-110 transition-transform duration-500`} />
+                      <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} rounded-bl-full`} />
                     </div>
 
                     <div className="relative space-y-8">
@@ -284,11 +275,10 @@ export default function Solution() {
                 </div>
               </div>
               </div>
-            );
-          })}
+          ))}
         </div>
 
-        {/* Premium Benefits Grid */}
+        {/* Benefits Grid */}
         <div className="space-y-16">
           {/* Section Header */}
           <div className="max-w-4xl mx-auto text-center space-y-6">
@@ -301,22 +291,19 @@ export default function Solution() {
           </div>
 
           {/* Benefits Grid */}
-          <div ref={benefitsRef} className="benefits-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {solutionBenefits.map((benefit, index) => {
-              const isVisible = benefitsVisible[index]
-              
-              return (
+          <div className="benefits-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {solutionBenefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className={`benefit-item group relative p-8 bg-white rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl transition-all duration-500 ${scrollAnimationClasses.scaleIn(isVisible)}`}
+                  className="benefit-item group relative p-8 bg-white rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl"
                 >
                 {/* Background gradient on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} opacity-0 rounded-3xl`} />
                 
                 <div className="relative text-center space-y-6">
                   {/* Professional Icon */}
                   <div className="flex justify-center mb-6">
-                    <div className={`p-4 rounded-2xl bg-gradient-to-br ${benefit.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`p-4 rounded-2xl bg-gradient-to-br ${benefit.color} text-white shadow-lg`}>
                       <benefit.icon className="w-8 h-8" strokeWidth={2} />
                     </div>
                   </div>
@@ -334,13 +321,12 @@ export default function Solution() {
                   </div>
                 </div>
                 </div>
-              );
-            })}
+            ))}
           </div>
 
           {/* Compelling CTA Section */}
           <div className="max-w-5xl mx-auto">
-            <div className="bg-gradient-to-r from-primary-600 to-accent-500 rounded-3xl p-12 lg:p-16 text-center text-white relative overflow-hidden">
+            <div className="bg-gradient-to-r from-primary-600 to-accent-500 rounded-3xl p-12 lg:p-16 text-center text-white relative">
               {/* Background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <svg className="w-full h-full" viewBox="0 0 100 100">
@@ -359,16 +345,16 @@ export default function Solution() {
                     Start Hiring Smarter Today
                   </h3>
                   <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
-                    Join 1,200+ companies using AI-powered recruitment. Guaranteed results or it&apos;s free.
+                    Join 300+ companies using AI-powered recruitment. Guaranteed results or it&apos;s free.
                   </p>
                 </div>
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <button className="px-8 py-4 bg-white text-primary-600 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
+                  <button className="px-8 py-4 bg-white text-primary-600 rounded-2xl font-bold text-lg shadow-xl">
                     Start Free Trial
                   </button>
-                  <button className="px-8 py-4 border-2 border-white/30 text-white rounded-2xl font-semibold text-lg hover:bg-white/10 transition-all duration-300">
+                  <button className="px-8 py-4 border-2 border-white/30 text-white rounded-2xl font-semibold text-lg">
                     Schedule Demo
                   </button>
                 </div>

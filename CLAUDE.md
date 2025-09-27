@@ -27,9 +27,8 @@ This is a Next.js 15 landing page for Intakesense, a recruitment platform. The a
 ### Tech Stack
 - **Next.js 15** with App Router and React 19
 - **Tailwind CSS v4** for styling with shadcn/ui components
-- **GSAP + ScrollTrigger** for advanced animations
+- **Framer Motion** for all animations with best practices
 - **Lenis** for smooth scrolling
-- **Framer Motion** for React-specific animations
 - **Lucide React** for icons
 
 ### Project Structure
@@ -42,8 +41,8 @@ This is a Next.js 15 landing page for Intakesense, a recruitment platform. The a
 
 ### Key Architecture Patterns
 
-1. **Dual Animation System**: GSAP + ScrollTrigger for complex scroll animations, Framer Motion for React components
-2. **Smooth Scrolling**: SmoothScrollProvider with Lenis integration and GSAP ticker synchronization  
+1. **Modern Animation System**: Framer Motion with custom hooks for scroll-triggered animations, character reveals, and counters
+2. **Smooth Scrolling**: Enhanced SmoothScrollProvider with Lenis integration for optimal performance  
 3. **Performance**: Dynamic imports with SSR enabled for all sections
 4. **Modern CSS**: Tailwind v4 with @theme inline, OKLCH colors, premium design system
 5. **shadcn/ui**: "new-york" style with proper path aliases and component organization
@@ -66,7 +65,7 @@ This is a Next.js 15 landing page for Intakesense, a recruitment platform. The a
 
 1. **Package Manager**: Always use `pnpm` - project has pnpm-lock.yaml
 2. **Tailwind v4**: No traditional config file, uses @theme inline in globals.css
-3. **Animation Cleanup**: Always use GSAP context with proper cleanup (ctx.revert())
+3. **Animation Best Practices**: Use reusable animation variants, proper dependencies in custom hooks, and performance-optimized triggers
 4. **Typography**: Uses premium scales with OKLCH colors and font feature settings
 5. **Code Splitting**: All sections use dynamic imports with loading states
 - only use pnpm not npm

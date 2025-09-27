@@ -1,50 +1,33 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 export function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50">
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
           {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-3"
-          >
-            <div className="relative w-12 h-12">
+          <div className="flex items-center">
+            <div className="relative w-40 h-10 sm:w-48 sm:h-12 lg:w-64 lg:h-16">
               <Image
                 src="/logo.png"
                 alt="Intakesense Logo"
-                width={48}
-                height={48}
+                width={1280}
+                height={320}
                 className="w-full h-full object-contain"
                 priority
               />
             </div>
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-gradient-premium">
-                Intakesense
-              </span>
-              <span className="text-xs text-gray-500 font-medium tracking-wide -mt-1">
-                AI RECRUITMENT
-              </span>
-            </div>
-          </motion.div>
+          </div>
 
           {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <button className="btn-premium px-6 py-3 rounded-2xl font-semibold text-white">
-              Start Free Trial
+          <div>
+            <button className="btn-premium min-h-[52px] px-5 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-white text-base sm:text-lg active:scale-[0.98] transition-transform duration-150 -webkit-tap-highlight-color-transparent">
+              <span className="hidden sm:inline">Start Free Trial</span>
+              <span className="sm:hidden">Get Started</span>
             </button>
-          </motion.div>
+          </div>
         </div>
       </div>
     </header>
