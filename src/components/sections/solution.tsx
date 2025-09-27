@@ -148,7 +148,7 @@ export default function Solution() {
             <span className="text-xs sm:text-sm font-bold tracking-wide">THE INTAKESENSE ADVANTAGE</span>
           </div>
 
-          <h2 className="solution-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 leading-[1.1]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 sm:mb-8 leading-[1.1]">
             <span className="text-gray-900">Our
             <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 bg-clip-text text-transparent"> Solution</span>
             </span><br />
@@ -192,13 +192,13 @@ export default function Solution() {
                     </div>
                     
                     <div>
-                      <div className="text-body-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                      <div className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
                         {feature.subtitle}
                       </div>
-                      <h3 className="text-h2 font-bold text-gray-900 mb-4">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
                         {feature.title}
                       </h3>
-                      <p className="text-body-lg text-gray-600 leading-relaxed max-w-xl">
+                      <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed max-w-xl">
                         {feature.description}
                       </p>
                     </div>
@@ -206,12 +206,12 @@ export default function Solution() {
 
                   {/* Key Highlights */}
                   <div className="space-y-4">
-                    <h4 className="text-h6 font-semibold text-gray-800">Key Features:</h4>
+                    <h4 className="text-sm sm:text-base font-semibold text-gray-800">Key Features:</h4>
                     <div className="grid gap-3">
                       {feature.highlights.map((highlight, idx) => (
                         <div key={idx} className="flex items-center gap-3">
                           <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${feature.color}`} />
-                          <span className="text-body text-gray-700">{highlight}</span>
+                          <span className="text-sm text-gray-700">{highlight}</span>
                         </div>
                       ))}
                     </div>
@@ -219,16 +219,16 @@ export default function Solution() {
 
                   {/* Process Steps */}
                   <div className="space-y-4">
-                    <h4 className="text-h6 font-semibold text-gray-800">How It Works:</h4>
-                    <div className="flex items-center gap-4">
+                    <h4 className="text-sm sm:text-base font-semibold text-gray-800">How It Works:</h4>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                       {feature.processSteps.map((step, idx) => (
                         <div key={idx} className="flex items-center gap-2">
-                          <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${feature.color} text-white text-sm font-bold flex items-center justify-center`}>
+                          <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r ${feature.color} text-white text-xs sm:text-sm font-bold flex items-center justify-center flex-shrink-0`}>
                             {idx + 1}
                           </div>
-                          <span className="text-body-sm text-gray-600">{step}</span>
+                          <span className="text-xs sm:text-sm text-gray-600">{step}</span>
                           {idx < feature.processSteps.length - 1 && (
-                            <ArrowRight className="w-4 h-4 text-gray-400 ml-2" />
+                            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 ml-2 hidden sm:block" />
                           )}
                         </div>
                       ))}
@@ -249,18 +249,18 @@ export default function Solution() {
 
                     <div className="relative space-y-8">
                       <div className="text-center">
-                        <h4 className="text-h5 font-bold text-gray-800 mb-2">Performance Metrics</h4>
-                        <p className="text-body-sm text-gray-500">Real results from our platform</p>
+                        <h4 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">Performance Metrics</h4>
+                        <p className="text-xs sm:text-sm text-gray-500">Real results from our platform</p>
                       </div>
 
                       {/* Metrics Display */}
                       <div className="grid grid-cols-2 gap-6">
                         {feature.metrics.map((metric, idx) => (
                           <div key={idx} className="text-center space-y-2">
-                            <div className="text-4xl lg:text-5xl font-black text-gray-900">
+                            <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900">
                               {metric.value}
                             </div>
-                            <div className="text-body-sm font-semibold text-gray-700">
+                            <div className="text-xs sm:text-sm font-semibold text-gray-700">
                               {metric.label}
                             </div>
                             <div className="text-xs text-gray-500">
@@ -282,7 +282,7 @@ export default function Solution() {
         <div className="space-y-16">
           {/* Section Header */}
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <h3 className="text-h2 font-bold text-gray-900">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
               Proven Results
             </h3>
             <p className="text-xl text-gray-600 leading-relaxed">
@@ -291,31 +291,31 @@ export default function Solution() {
           </div>
 
           {/* Benefits Grid */}
-          <div className="benefits-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="benefits-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {solutionBenefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className="benefit-item group relative p-8 bg-white rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl"
+                  className="benefit-item group relative p-4 sm:p-6 lg:p-8 bg-white rounded-2xl sm:rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl"
                 >
                 {/* Background gradient on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} opacity-0 rounded-3xl`} />
                 
                 <div className="relative text-center space-y-6">
                   {/* Professional Icon */}
-                  <div className="flex justify-center mb-6">
-                    <div className={`p-4 rounded-2xl bg-gradient-to-br ${benefit.color} text-white shadow-lg`}>
-                      <benefit.icon className="w-8 h-8" strokeWidth={2} />
+                  <div className="flex justify-center mb-4 sm:mb-6">
+                    <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${benefit.color} text-white shadow-lg`}>
+                      <benefit.icon className="w-6 h-6 sm:w-8 sm:h-8" strokeWidth={2} />
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <div className="text-4xl lg:text-5xl font-black text-gray-900">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900">
                       {benefit.value}
                     </div>
-                    <div className="text-h5 font-bold text-gray-800">
+                    <div className="text-base sm:text-lg font-bold text-gray-800">
                       {benefit.title}
                     </div>
-                    <div className="text-body-sm text-gray-600 leading-relaxed">
+                    <div className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                       {benefit.desc}
                     </div>
                   </div>
@@ -326,7 +326,7 @@ export default function Solution() {
 
           {/* Compelling CTA Section */}
           <div className="max-w-5xl mx-auto">
-            <div className="bg-gradient-to-r from-primary-600 to-accent-500 rounded-3xl p-12 lg:p-16 text-center text-white relative">
+            <div className="bg-gradient-to-r from-primary-600 to-accent-500 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 xl:p-16 text-center text-white relative">
               {/* Background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <svg className="w-full h-full" viewBox="0 0 100 100">
@@ -341,10 +341,10 @@ export default function Solution() {
               
               <div className="relative space-y-8">
                 <div className="space-y-4">
-                  <h3 className="text-h2 md:text-h1 font-black leading-tight">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black leading-tight">
                     Start Hiring Smarter Today
                   </h3>
-                  <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
+                  <p className="text-base sm:text-lg lg:text-xl opacity-90 max-w-2xl mx-auto">
                     Join 300+ companies using AI-powered recruitment. Guaranteed results or it&apos;s free.
                   </p>
                 </div>

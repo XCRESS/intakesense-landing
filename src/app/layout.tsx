@@ -61,8 +61,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/logo.png',
-        width: 1200,
-        height: 630,
+        secureUrl: 'https://intakesense.com/logo.png',
+        // Remove incorrect dimensions - let WhatsApp detect actual size
         alt: 'Intakesense - AI-Powered Recruitment Platform',
         type: 'image/png',
       },
