@@ -33,12 +33,12 @@ export default function Hero() {
                 <span className="block text-gradient-premium">Perfect Candidate</span>
                 <span className="block">in <span className="text-primary-600">12 Days</span></span>
                 <span className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-600 mt-2">
-                  or it's completely free
+                  or it&apos;s completely free
                 </span>
               </h1>
 
               <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                India's only recruitment platform with a <span className="text-gray-900 font-bold">90-day performance guarantee.</span>
+                India&apos;s only recruitment platform with a <span className="text-gray-900 font-bold">90-day performance guarantee.</span>
               </p>
             </div>
 
