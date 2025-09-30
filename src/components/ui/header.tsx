@@ -23,7 +23,7 @@ export function Header() {
 
           {/* CTA Button */}
           <div>
-            <button className="btn-premium min-h-[52px] px-5 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-white text-base sm:text-lg active:scale-[0.98] transition-transform duration-150 -webkit-tap-highlight-color-transparent">
+            <button className="relative overflow-hidden min-h-[52px] px-5 sm:px-6 py-3 sm:py-4 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 rounded-xl sm:rounded-2xl font-semibold text-white text-base sm:text-lg shadow-lg shadow-primary-900/25 hover:shadow-xl hover:shadow-primary-900/40 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] border border-primary-500/20 hover:border-primary-400/30 -webkit-tap-highlight-color-transparent">
               <span className="hidden sm:inline">Start Free Trial</span>
               <span className="sm:hidden">Get Started</span>
             </button>

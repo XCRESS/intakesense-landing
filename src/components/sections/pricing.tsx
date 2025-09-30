@@ -277,17 +277,17 @@ export default function Pricing() {
 
                 {/* CTA */}
                 <button
-                  className={`btn relative w-full py-4 rounded-2xl font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
+                  className={`relative overflow-hidden w-full py-4 rounded-2xl font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] ${
                     plan.popular
-                      ? 'bg-gradient-to-r from-primary-600 to-accent-600 text-white shadow-lg'
+                      ? 'bg-gradient-to-br from-primary-600 via-primary-700 to-accent-600 hover:from-primary-500 hover:via-primary-600 hover:to-accent-500 text-white shadow-xl shadow-primary-900/30 hover:shadow-2xl hover:shadow-primary-900/50 border border-primary-500/20 hover:border-primary-400/40'
                       : plan.name === 'Trial'
-                      ? 'bg-green-500 text-white shadow-md'
-                      : 'bg-gray-800 text-white shadow-md'
+                      ? 'bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 hover:from-green-400 hover:via-green-500 hover:to-emerald-500 text-white shadow-lg shadow-green-900/25 hover:shadow-xl hover:shadow-green-900/40 border border-green-400/20 hover:border-green-300/40'
+                      : 'bg-gradient-to-br from-gray-800 via-gray-900 to-slate-900 hover:from-gray-700 hover:via-gray-800 hover:to-slate-800 text-white shadow-lg shadow-gray-900/30 hover:shadow-xl hover:shadow-gray-900/50 border border-gray-600/20 hover:border-gray-500/40'
                   }`}
                 >
                   <span className="relative z-10">{plan.cta}</span>
                   {plan.popular && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent-600 to-primary-700 opacity-0" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-accent-600 to-primary-700 opacity-0 hover:opacity-10 transition-opacity duration-200" />
                   )}
                 </button>
               </div>
@@ -355,10 +355,10 @@ export default function Pricing() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="px-8 py-4 bg-primary-600 text-white rounded-xl font-semibold text-lg shadow-lg">
+              <button className="relative overflow-hidden px-8 py-4 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white rounded-xl font-semibold text-lg shadow-lg shadow-primary-900/25 hover:shadow-xl hover:shadow-primary-900/40 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] border border-primary-500/20 hover:border-primary-400/30">
                 Book Free Consultation
               </button>
-              <button className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold text-lg">
+              <button className="relative px-8 py-4 border border-gray-300/60 hover:border-primary-300/80 text-gray-700 hover:text-primary-700 rounded-xl font-semibold text-lg bg-white/80 hover:bg-gradient-to-br hover:from-white hover:to-primary-50/30 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[0.5px] shadow-sm shadow-gray-200/50 hover:shadow-lg hover:shadow-primary-200/30 backdrop-blur-sm">
                 Calculate Your Savings
               </button>
             </div>

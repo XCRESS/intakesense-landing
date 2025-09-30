@@ -351,10 +351,10 @@ export default function Solution() {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <button className="px-8 py-4 bg-white text-primary-600 rounded-2xl font-bold text-lg shadow-xl">
+                  <button className="relative overflow-hidden px-8 py-4 bg-white hover:bg-gradient-to-br hover:from-white hover:to-gray-50 text-primary-600 hover:text-primary-700 rounded-2xl font-bold text-lg shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-black/20 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] border border-white/20 hover:border-white/40">
                     Start Free Trial
                   </button>
-                  <button className="px-8 py-4 border-2 border-white/30 text-white rounded-2xl font-semibold text-lg">
+                  <button className="relative px-8 py-4 border border-white/40 hover:border-white/60 text-white rounded-2xl font-semibold text-lg hover:bg-white/10 backdrop-blur-sm active:scale-[0.98] transition-all duration-250 hover:-translate-y-[0.5px] shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/20">
                     Schedule Demo
                   </button>
                 </div>
