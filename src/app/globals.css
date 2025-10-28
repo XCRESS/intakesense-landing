@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@layer components {
+  .input {
+    @apply w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition;
+  }
+
+  .btn-secondary {
+    @apply bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition;
+  }
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -87,39 +102,65 @@
 
 :root {
   --radius: 0.75rem;
-  
+
   /* Mobile-First Typography Scale */
-  --font-size-xs: 0.75rem;     /* 12px */
-  --font-size-sm: 0.875rem;    /* 14px */
-  --font-size-base: 1rem;      /* 16px - mobile base */
-  --font-size-lg: 1.125rem;    /* 18px */
-  --font-size-xl: 1.25rem;     /* 20px */
-  --font-size-2xl: 1.5rem;     /* 24px */
-  --font-size-3xl: 1.875rem;   /* 30px - mobile h1 */
-  --font-size-4xl: 2.25rem;    /* 36px - mobile display */
-  --font-size-5xl: 2.5rem;     /* 40px - mobile hero (reduced) */
-  --font-size-6xl: 3rem;       /* 48px - tablet hero */
-  --font-size-7xl: 3.75rem;    /* 60px - desktop hero */
-  --font-size-8xl: 4.5rem;     /* 72px - large desktop */
-  --font-size-9xl: 6rem;       /* 96px - xl desktop */
+  --font-size-xs: 0.75rem;
+  /* 12px */
+  --font-size-sm: 0.875rem;
+  /* 14px */
+  --font-size-base: 1rem;
+  /* 16px - mobile base */
+  --font-size-lg: 1.125rem;
+  /* 18px */
+  --font-size-xl: 1.25rem;
+  /* 20px */
+  --font-size-2xl: 1.5rem;
+  /* 24px */
+  --font-size-3xl: 1.875rem;
+  /* 30px - mobile h1 */
+  --font-size-4xl: 2.25rem;
+  /* 36px - mobile display */
+  --font-size-5xl: 2.5rem;
+  /* 40px - mobile hero (reduced) */
+  --font-size-6xl: 3rem;
+  /* 48px - tablet hero */
+  --font-size-7xl: 3.75rem;
+  /* 60px - desktop hero */
+  --font-size-8xl: 4.5rem;
+  /* 72px - large desktop */
+  --font-size-9xl: 6rem;
+  /* 96px - xl desktop */
 
   /* Mobile-First Spacing Scale */
-  --space-xs: 0.25rem;         /* 4px */
-  --space-sm: 0.5rem;          /* 8px */
-  --space-md: 0.75rem;         /* 12px */
-  --space-lg: 1rem;            /* 16px */
-  --space-xl: 1.5rem;          /* 24px */
-  --space-2xl: 2rem;           /* 32px */
-  --space-3xl: 2.5rem;         /* 40px */
-  --space-4xl: 3rem;           /* 48px */
-  --space-5xl: 4rem;           /* 64px */
-  --space-6xl: 5rem;           /* 80px */
+  --space-xs: 0.25rem;
+  /* 4px */
+  --space-sm: 0.5rem;
+  /* 8px */
+  --space-md: 0.75rem;
+  /* 12px */
+  --space-lg: 1rem;
+  /* 16px */
+  --space-xl: 1.5rem;
+  /* 24px */
+  --space-2xl: 2rem;
+  /* 32px */
+  --space-3xl: 2.5rem;
+  /* 40px */
+  --space-4xl: 3rem;
+  /* 48px */
+  --space-5xl: 4rem;
+  /* 64px */
+  --space-6xl: 5rem;
+  /* 80px */
 
   /* Mobile Touch Targets */
-  --touch-target-min: 44px;    /* Minimum touch target */
-  --touch-target-comfortable: 48px; /* Comfortable touch target */
-  --touch-target-large: 56px;  /* Large touch target */
-  
+  --touch-target-min: 44px;
+  /* Minimum touch target */
+  --touch-target-comfortable: 48px;
+  /* Comfortable touch target */
+  --touch-target-large: 56px;
+  /* Large touch target */
+
   /* Premium Line Heights */
   --line-height-none: 1;
   --line-height-tight: 1.25;
@@ -127,7 +168,7 @@
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.625;
   --line-height-loose: 2;
-  
+
   /* Premium Letter Spacing */
   --letter-spacing-tighter: -0.05em;
   --letter-spacing-tight: -0.025em;
@@ -135,43 +176,60 @@
   --letter-spacing-wide: 0.025em;
   --letter-spacing-wider: 0.05em;
   --letter-spacing-widest: 0.1em;
-  
+
   /* Sophisticated Color System - India-focused with premium feel */
-  --background: oklch(0.99 0 0);          /* Pure white background */
-  --foreground: oklch(0.12 0 0);          /* Rich black text */
-  --card: oklch(1 0 0);                   /* Pure white cards */
-  --card-foreground: oklch(0.12 0 0);     /* Rich black on cards */
+  --background: oklch(0.99 0 0);
+  /* Pure white background */
+  --foreground: oklch(0.12 0 0);
+  /* Rich black text */
+  --card: oklch(1 0 0);
+  /* Pure white cards */
+  --card-foreground: oklch(0.12 0 0);
+  /* Rich black on cards */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.12 0 0);
-  
+
   /* Primary: Professional Navy Blue - Trust & Enterprise */
-  --primary: oklch(0.25 0.15 240);        /* Professional navy */
+  --primary: oklch(0.25 0.15 240);
+  /* Professional navy */
   --primary-foreground: oklch(0.99 0 0);
-  --primary-50: oklch(0.98 0.02 240);     /* Ultra light tint */
-  --primary-100: oklch(0.95 0.04 240);    /* Light tint */
-  --primary-200: oklch(0.90 0.06 240);    /* Medium light */
-  --primary-300: oklch(0.80 0.08 240);    /* Medium */
-  --primary-400: oklch(0.60 0.10 240);    /* Medium dark */
-  --primary-500: oklch(0.40 0.12 240);    /* Medium primary */
-  --primary-600: oklch(0.25 0.15 240);    /* Base primary */
-  --primary-700: oklch(0.20 0.15 240);    /* Dark */
-  --primary-800: oklch(0.15 0.12 240);    /* Very dark */
-  --primary-900: oklch(0.10 0.10 240);    /* Ultra dark */
+  --primary-50: oklch(0.98 0.02 240);
+  /* Ultra light tint */
+  --primary-100: oklch(0.95 0.04 240);
+  /* Light tint */
+  --primary-200: oklch(0.90 0.06 240);
+  /* Medium light */
+  --primary-300: oklch(0.80 0.08 240);
+  /* Medium */
+  --primary-400: oklch(0.60 0.10 240);
+  /* Medium dark */
+  --primary-500: oklch(0.40 0.12 240);
+  /* Medium primary */
+  --primary-600: oklch(0.25 0.15 240);
+  /* Base primary */
+  --primary-700: oklch(0.20 0.15 240);
+  /* Dark */
+  --primary-800: oklch(0.15 0.12 240);
+  /* Very dark */
+  --primary-900: oklch(0.10 0.10 240);
+  /* Ultra dark */
 
   /* Accent: Professional Teal - Growth & Innovation */
-  --accent: oklch(0.55 0.12 180);          /* Professional teal */
+  --accent: oklch(0.55 0.12 180);
+  /* Professional teal */
   --accent-foreground: oklch(0.99 0 0);
   --accent-50: oklch(0.98 0.02 180);
   --accent-100: oklch(0.95 0.04 180);
   --accent-200: oklch(0.90 0.06 180);
   --accent-300: oklch(0.80 0.08 180);
   --accent-400: oklch(0.70 0.10 180);
-  --accent-500: oklch(0.55 0.12 180);     /* Base accent */
+  --accent-500: oklch(0.55 0.12 180);
+  /* Base accent */
   --accent-600: oklch(0.45 0.12 180);
   --accent-700: oklch(0.35 0.10 180);
   --accent-800: oklch(0.25 0.08 180);
   --accent-900: oklch(0.15 0.06 180);
-  
+
   /* Success: Professional Green - Growth & Achievement */
   --success: oklch(0.50 0.15 140);
   --success-foreground: oklch(0.99 0 0);
@@ -185,24 +243,31 @@
   --brand-teal: oklch(0.55 0.12 180);
   --brand-gray: oklch(0.50 0.02 240);
   --brand-light: oklch(0.98 0.01 240);
-  
+
   /* Secondary: Warm Neutrals with subtle warmth */
-  --secondary: oklch(0.96 0.004 85);      /* Warm light gray */
+  --secondary: oklch(0.96 0.004 85);
+  /* Warm light gray */
   --secondary-foreground: oklch(0.12 0 0);
-  
+
   /* Muted colors with better contrast */
-  --muted: oklch(0.95 0.006 85);          /* Warm very light gray */
-  --muted-foreground: oklch(0.48 0.004 85); /* Medium gray with warmth */
-  
+  --muted: oklch(0.95 0.006 85);
+  /* Warm very light gray */
+  --muted-foreground: oklch(0.48 0.004 85);
+  /* Medium gray with warmth */
+
   /* Error/Destructive: Refined red */
-  --destructive: oklch(0.58 0.22 15);     /* Professional red */
+  --destructive: oklch(0.58 0.22 15);
+  /* Professional red */
   --destructive-foreground: oklch(0.99 0 0);
-  
+
   /* UI Elements */
-  --border: oklch(0.89 0.008 85);         /* Subtle warm border */
-  --input: oklch(0.96 0.004 85);          /* Input background */
-  --ring: oklch(0.42 0.28 262);           /* Focus ring matches primary */
-  
+  --border: oklch(0.89 0.008 85);
+  /* Subtle warm border */
+  --input: oklch(0.96 0.004 85);
+  /* Input background */
+  --ring: oklch(0.42 0.28 262);
+  /* Focus ring matches primary */
+
   /* Sophisticated grays for premium feel */
   --gray-50: oklch(0.98 0.003 85);
   --gray-100: oklch(0.95 0.006 85);
@@ -214,7 +279,7 @@
   --gray-700: oklch(0.32 0.003 85);
   --gray-800: oklch(0.22 0.002 85);
   --gray-900: oklch(0.14 0.001 85);
-  
+
   /* Chart colors with brand alignment */
   --chart-1: oklch(0.42 0.28 262);
   --chart-2: oklch(0.72 0.18 55);
@@ -261,6 +326,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
@@ -268,10 +334,11 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-  
+
   /* Mobile-First Typography Hierarchy */
   .text-display-2xl {
-    font-size: var(--font-size-6xl);  /* Start smaller on mobile */
+    font-size: var(--font-size-6xl);
+    /* Start smaller on mobile */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 800;
@@ -292,7 +359,8 @@
   }
 
   .text-display-xl {
-    font-size: var(--font-size-5xl);  /* Start smaller on mobile */
+    font-size: var(--font-size-5xl);
+    /* Start smaller on mobile */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 800;
@@ -313,7 +381,8 @@
   }
 
   .text-display-lg {
-    font-size: var(--font-size-4xl);  /* Mobile friendly */
+    font-size: var(--font-size-4xl);
+    /* Mobile friendly */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 700;
@@ -332,7 +401,8 @@
   }
 
   .text-display-md {
-    font-size: var(--font-size-3xl);  /* Mobile friendly */
+    font-size: var(--font-size-3xl);
+    /* Mobile friendly */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 700;
@@ -351,7 +421,8 @@
   }
 
   .text-display-sm {
-    font-size: var(--font-size-2xl);  /* Mobile friendly */
+    font-size: var(--font-size-2xl);
+    /* Mobile friendly */
     line-height: var(--line-height-snug);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 600;
@@ -370,8 +441,10 @@
   }
 
   /* Mobile-First Heading styles */
-  h1, .text-h1 {
-    font-size: var(--font-size-3xl);  /* Mobile friendly */
+  h1,
+  .text-h1 {
+    font-size: var(--font-size-3xl);
+    /* Mobile friendly */
     line-height: var(--line-height-tight);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 700;
@@ -379,19 +452,25 @@
   }
 
   @media (min-width: 768px) {
-    h1, .text-h1 {
+
+    h1,
+    .text-h1 {
       font-size: var(--font-size-4xl);
     }
   }
 
   @media (min-width: 1024px) {
-    h1, .text-h1 {
+
+    h1,
+    .text-h1 {
       font-size: var(--font-size-5xl);
     }
   }
 
-  h2, .text-h2 {
-    font-size: var(--font-size-2xl);  /* Mobile friendly */
+  h2,
+  .text-h2 {
+    font-size: var(--font-size-2xl);
+    /* Mobile friendly */
     line-height: var(--line-height-snug);
     letter-spacing: var(--letter-spacing-tight);
     font-weight: 600;
@@ -399,19 +478,25 @@
   }
 
   @media (min-width: 768px) {
-    h2, .text-h2 {
+
+    h2,
+    .text-h2 {
       font-size: var(--font-size-3xl);
     }
   }
 
   @media (min-width: 1024px) {
-    h2, .text-h2 {
+
+    h2,
+    .text-h2 {
       font-size: var(--font-size-4xl);
     }
   }
 
-  h3, .text-h3 {
-    font-size: var(--font-size-xl);   /* Mobile friendly */
+  h3,
+  .text-h3 {
+    font-size: var(--font-size-xl);
+    /* Mobile friendly */
     line-height: var(--line-height-snug);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 600;
@@ -419,19 +504,25 @@
   }
 
   @media (min-width: 768px) {
-    h3, .text-h3 {
+
+    h3,
+    .text-h3 {
       font-size: var(--font-size-2xl);
     }
   }
 
   @media (min-width: 1024px) {
-    h3, .text-h3 {
+
+    h3,
+    .text-h3 {
       font-size: var(--font-size-3xl);
     }
   }
 
-  h4, .text-h4 {
-    font-size: var(--font-size-lg);   /* Mobile friendly */
+  h4,
+  .text-h4 {
+    font-size: var(--font-size-lg);
+    /* Mobile friendly */
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 600;
@@ -439,19 +530,25 @@
   }
 
   @media (min-width: 768px) {
-    h4, .text-h4 {
+
+    h4,
+    .text-h4 {
       font-size: var(--font-size-xl);
     }
   }
 
   @media (min-width: 1024px) {
-    h4, .text-h4 {
+
+    h4,
+    .text-h4 {
       font-size: var(--font-size-2xl);
     }
   }
 
-  h5, .text-h5 {
-    font-size: var(--font-size-base); /* Mobile friendly */
+  h5,
+  .text-h5 {
+    font-size: var(--font-size-base);
+    /* Mobile friendly */
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 500;
@@ -459,19 +556,25 @@
   }
 
   @media (min-width: 768px) {
-    h5, .text-h5 {
+
+    h5,
+    .text-h5 {
       font-size: var(--font-size-lg);
     }
   }
 
   @media (min-width: 1024px) {
-    h5, .text-h5 {
+
+    h5,
+    .text-h5 {
       font-size: var(--font-size-xl);
     }
   }
 
-  h6, .text-h6 {
-    font-size: var(--font-size-sm);   /* Mobile friendly */
+  h6,
+  .text-h6 {
+    font-size: var(--font-size-sm);
+    /* Mobile friendly */
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-wide);
     font-weight: 500;
@@ -480,17 +583,21 @@
   }
 
   @media (min-width: 768px) {
-    h6, .text-h6 {
+
+    h6,
+    .text-h6 {
       font-size: var(--font-size-base);
     }
   }
 
   @media (min-width: 1024px) {
-    h6, .text-h6 {
+
+    h6,
+    .text-h6 {
       font-size: var(--font-size-lg);
     }
   }
-  
+
   /* Body text variations */
   .text-lead {
     font-size: var(--font-size-xl);
@@ -498,28 +605,28 @@
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 400;
   }
-  
+
   .text-body-lg {
     font-size: var(--font-size-lg);
     line-height: var(--line-height-relaxed);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 400;
   }
-  
+
   .text-body {
     font-size: var(--font-size-base);
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-normal);
     font-weight: 400;
   }
-  
+
   .text-body-sm {
     font-size: var(--font-size-sm);
     line-height: var(--line-height-normal);
     letter-spacing: var(--letter-spacing-wide);
     font-weight: 400;
   }
-  
+
   /* Premium button styles */
   .btn {
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
@@ -529,17 +636,17 @@
     will-change: transform;
   }
 
-/* Performance optimizations */
-.animate-element {
-  will-change: transform, opacity;
-  transform: translateZ(0);
-}
+  /* Performance optimizations */
+  .animate-element {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
 
-.gpu-accelerated {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
 
 
   /* Accessible focus states */
@@ -556,14 +663,14 @@
     outline-offset: 2px;
     box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.2);
   }
-  
+
   /* Link styles */
   a {
     color: oklch(var(--primary));
     text-decoration: none;
     transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   a:hover {
     color: oklch(var(--primary-600));
   }
@@ -578,6 +685,7 @@
     transform: translateY(40px) scale(0.95);
     filter: blur(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -590,6 +698,7 @@
     opacity: 0;
     transform: scale(0.8) rotate(-5deg);
   }
+
   to {
     opacity: 1;
     transform: scale(1) rotate(0deg);
@@ -598,10 +707,13 @@
 
 /* Advanced gradient animations */
 @keyframes premium-gradient-shift {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
     background-size: 200% 200%;
   }
+
   50% {
     background-position: 100% 50%;
     background-size: 250% 250%;
@@ -612,6 +724,7 @@
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }
@@ -619,9 +732,12 @@
 
 /* Sophisticated glow effects */
 @keyframes premium-glow-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(66, 153, 225, 0.3);
   }
+
   50% {
     box-shadow: 0 0 40px rgba(66, 153, 225, 0.6), 0 0 60px rgba(66, 153, 225, 0.3);
   }
@@ -633,10 +749,12 @@
     border-radius: 1rem;
     transform: scale(1);
   }
+
   50% {
     border-radius: 2rem;
     transform: scale(1.02);
   }
+
   100% {
     border-radius: 1rem;
     transform: scale(1);
@@ -645,12 +763,16 @@
 
 /* Floating elements */
 @keyframes premium-float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
+
   33% {
     transform: translateY(-10px) rotate(1deg);
   }
+
   66% {
     transform: translateY(-5px) rotate(-0.5deg);
   }
@@ -663,6 +785,7 @@
     opacity: 0;
     transform: translateY(100%) rotateX(-90deg);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) rotateX(0deg);
@@ -675,6 +798,7 @@
     transform: translateY(0);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
+
   100% {
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
@@ -733,10 +857,10 @@
 
 /* Premium shimmer effect */
 .shimmer {
-  background: linear-gradient(90deg, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(255, 255, 255, 0.4) 50%, 
-    rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%);
   background-size: 200% 100%;
   animation: premium-shimmer 2s infinite;
 }
@@ -763,8 +887,8 @@
 /* Professional gradient backgrounds */
 .bg-gradient-premium {
   background: linear-gradient(135deg,
-    var(--brand-navy) 0%,
-    var(--brand-teal) 100%);
+      var(--brand-navy) 0%,
+      var(--brand-teal) 100%);
 }
 
 /* Professional text effects */
@@ -780,7 +904,7 @@
   position: relative;
   border: 2px solid transparent;
   background: linear-gradient(var(--background), var(--background)) padding-box,
-              linear-gradient(135deg, var(--primary-500), var(--accent-500)) border-box;
+    linear-gradient(135deg, var(--primary-500), var(--accent-500)) border-box;
 }
 
 .border-animated::before {
@@ -800,14 +924,14 @@
 
 /* Advanced shadows */
 .shadow-premium {
-  box-shadow: 
+  box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 4px 16px rgba(0, 0, 0, 0.08),
     0 8px 32px rgba(0, 0, 0, 0.04);
 }
 
 .shadow-premium-lg {
-  box-shadow: 
+  box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.1),
     0 8px 32px rgba(0, 0, 0, 0.08),
     0 16px 64px rgba(0, 0, 0, 0.06);
@@ -815,8 +939,9 @@
 
 /* Premium Cursor Experience - Simplified */
 @media (min-width: 1024px) {
-  .magnetic-hover:hover, 
-  .card-tilt:hover, 
+
+  .magnetic-hover:hover,
+  .card-tilt:hover,
   .btn-premium:hover {
     cursor: pointer;
   }
@@ -840,12 +965,14 @@
 
 /* Optimized scroll behavior */
 html {
-  scroll-behavior: auto; /* Changed from smooth for better performance */
+  scroll-behavior: auto;
+  /* Changed from smooth for better performance */
   scroll-padding-top: 80px;
 }
 
 /* Prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

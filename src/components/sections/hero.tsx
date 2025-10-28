@@ -2,6 +2,8 @@
 
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link';
+
 
 export default function Hero() {
   return (
@@ -59,12 +61,14 @@ export default function Hero() {
             {/* CTA */}
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0">
-                <button className="group relative overflow-hidden flex-1 min-h-[56px] px-8 py-4 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white rounded-2xl font-bold text-lg shadow-xl shadow-primary-900/30 hover:shadow-2xl hover:shadow-primary-900/50 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] border border-primary-500/20 hover:border-primary-400/40">
-                  <span className="flex items-center justify-center gap-3">
-                    <span>Start Hiring</span>
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-                  </span>
-                </button>
+                <Link href="/form">
+                  <button className="group relative overflow-hidden flex-1 min-h-[56px] px-8 py-4 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white rounded-2xl font-bold text-lg shadow-xl shadow-primary-900/30 hover:shadow-2xl hover:shadow-primary-900/50 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] border border-primary-500/20 hover:border-primary-400/40">
+                    <span className="flex items-center justify-center gap-3">
+                      Start Hiring
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                    </span>
+                  </button>
+                </Link>
                 <button className="relative min-h-[56px] px-8 py-4 border border-gray-300/60 hover:border-primary-300/80 text-gray-700 hover:text-primary-700 rounded-2xl font-semibold text-lg bg-white/80 hover:bg-gradient-to-br hover:from-white hover:to-primary-50/30 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[0.5px] shadow-sm shadow-gray-200/50 hover:shadow-lg hover:shadow-primary-200/30 backdrop-blur-sm">
                   ROI Calculator
                 </button>
