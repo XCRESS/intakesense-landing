@@ -40,7 +40,7 @@ const solutionFeatures = [
     icon: Target,
     title: 'Precision Targeting',
     subtitle: 'Find Hidden Gems',
-    description: 'Access passive candidates from top Indian companies who aren&apos;t actively looking but are open to the right opportunity.',
+    description: 'Access passive candidates from top Indian companies who aren\'t actively looking but are open to the right opportunity.',
     color: 'from-accent-500 to-orange-500',
     bgColor: 'from-accent-50 to-orange-50',
     metrics: [
@@ -124,13 +124,13 @@ export default function Solution() {
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-primary-200/20 to-accent-200/15 rounded-full filter blur-3xl" />
         <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-green-200/15 to-primary-200/20 rounded-full filter blur-3xl" />
-        
+
         {/* Animated grid pattern */}
         <div className="absolute inset-0 opacity-[0.02]">
           <svg width="100" height="100" viewBox="0 0 100 100" className="w-full h-full">
             <defs>
               <pattern id="solution-grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="currentColor" strokeWidth="1"/>
+                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="currentColor" strokeWidth="1" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#solution-grid)" />
@@ -143,17 +143,17 @@ export default function Solution() {
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 sm:mb-16 lg:mb-24">
           <div className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1"
           >
-          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 mb-6 sm:mb-8">
-            <div className="w-2 h-2 rounded-full bg-green-500" />
-            <span className="text-xs sm:text-sm font-bold tracking-wide">THE INTAKESENSE ADVANTAGE</span>
-          </div>
+            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 mb-6 sm:mb-8">
+              <div className="w-2 h-2 rounded-full bg-green-500" />
+              <span className="text-xs sm:text-sm font-bold tracking-wide">THE INTAKESENSE ADVANTAGE</span>
+            </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 sm:mb-8 leading-[1.1]">
-            <span className="text-gray-900">Our
-            <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 bg-clip-text text-transparent"> Solution</span>
-            </span><br />
-            <span className="text-gray-700">AI-Powered Recruitment</span>
-          </h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 sm:mb-8 leading-[1.1]">
+              <span className="text-gray-900">Our
+                <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 bg-clip-text text-transparent"> Solution</span>
+              </span><br />
+              <span className="text-gray-700">AI-Powered Recruitment</span>
+            </h2>
 
             <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Advanced AI meets human expertise to deliver faster, more accurate hiring with guaranteed results.
@@ -176,12 +176,11 @@ export default function Solution() {
         {/* Feature Showcase */}
         <div className="space-y-20 mb-24">
           {solutionFeatures.map((feature, index) => (
-              <div 
-                key={index}
-                className={`feature-card group relative ${
-                  index % 2 === 0 ? '' : 'lg:flex-row-reverse'
+            <div
+              key={index}
+              className={`feature-card group relative ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'
                 }`}
-              >
+            >
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 {/* Feature Content */}
                 <div className="space-y-8">
@@ -190,7 +189,7 @@ export default function Solution() {
                     <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${feature.color} text-white shadow-xl`}>
                       <feature.icon className="w-10 h-10" />
                     </div>
-                    
+
                     <div>
                       <div className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
                         {feature.subtitle}
@@ -241,7 +240,7 @@ export default function Solution() {
                   <div className="p-8 lg:p-10 bg-white rounded-3xl border-2 border-gray-200 shadow-xl">
                     {/* Background gradient */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgColor} opacity-0`} />
-                    
+
                     {/* Animated corner */}
                     <div className="absolute top-0 right-0 w-24 h-24 opacity-30">
                       <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} rounded-bl-full`} />
@@ -274,7 +273,7 @@ export default function Solution() {
                   </div>
                 </div>
               </div>
-              </div>
+            </div>
           ))}
         </div>
 
@@ -293,13 +292,13 @@ export default function Solution() {
           {/* Benefits Grid */}
           <div className="benefits-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {solutionBenefits.map((benefit, index) => (
-                <div
-                  key={index}
-                  className="benefit-item group relative p-4 sm:p-6 lg:p-8 bg-white rounded-2xl sm:rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl"
-                >
+              <div
+                key={index}
+                className="benefit-item group relative p-4 sm:p-6 lg:p-8 bg-white rounded-2xl sm:rounded-3xl border-2 border-gray-200 hover:border-primary-200 hover:shadow-xl"
+              >
                 {/* Background gradient on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${benefit.bgColor} opacity-0 rounded-3xl`} />
-                
+
                 <div className="relative text-center space-y-6">
                   {/* Professional Icon */}
                   <div className="flex justify-center mb-4 sm:mb-6">
@@ -320,7 +319,7 @@ export default function Solution() {
                     </div>
                   </div>
                 </div>
-                </div>
+              </div>
             ))}
           </div>
 
@@ -338,7 +337,7 @@ export default function Solution() {
                   <rect width="100%" height="100%" fill="url(#cta-pattern)" />
                 </svg>
               </div>
-              
+
               <div className="relative space-y-8">
                 <div className="space-y-4">
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black leading-tight">
