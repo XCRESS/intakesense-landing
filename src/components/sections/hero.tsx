@@ -2,9 +2,6 @@
 
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
-// import Link from 'next/link';
-import FormPage from './FormPage';
-import { useState } from 'react';
 import { useFormContext } from "@/context/FormContext";
 
 

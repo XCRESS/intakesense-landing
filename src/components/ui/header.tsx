@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useFormContext } from "@/context/FormContext";
 
-export function Header({ showForm }: { showForm: boolean }) {
+export function Header() {
 
   const { openForm } = useFormContext();
   return (

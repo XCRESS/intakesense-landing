@@ -1,22 +1,24 @@
 "use client";
 
+import React from "react";
 import { X, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 export default function FormPage({ onClose }: { onClose: () => void }) {
     const [role, setRole] = useState<"employee" | "employer" | null>(null);
     const [posterType, setPosterType] = useState<"company" | "individual" | null>(null);
 
     // ✅ Reusable components
-    const Input = (props: any) => (
+    const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
         <input
             {...props}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
     );
 
-    const TextArea = (props: any) => (
+    const TextArea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
         <textarea
             {...props}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
@@ -33,7 +35,7 @@ export default function FormPage({ onClose }: { onClose: () => void }) {
         const [loading, setLoading] = useState(false);
         const [message, setMessage] = useState("");
 
-        const onSubmit = async (data: any) => {
+        const onSubmit: SubmitHandler<FieldValues> = async (data) => {
             setLoading(true);
             setMessage("");
 
