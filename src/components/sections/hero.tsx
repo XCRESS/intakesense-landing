@@ -137,15 +137,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll Indicator - Hidden on mobile */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 hidden sm:block">
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-xs text-gray-400 font-medium tracking-wide uppercase">Scroll to Explore</span>
-          <div className="w-6 h-10 border-2 border-primary-300 rounded-full p-1 bg-white/20">
-            <div className="w-1 h-2 bg-gradient-to-b from-primary-500 to-accent-500 rounded-full mx-auto" />
-          </div>
-        </div>
-      </div>
+
     </section>
   )
 }
