@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { X, ArrowLeft } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+
 
 export default function FormPage({ onClose }: { onClose: () => void }) {
     const [role, setRole] = useState<"employee" | "employer" | null>(null);
@@ -14,14 +13,14 @@ export default function FormPage({ onClose }: { onClose: () => void }) {
     const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
         <input
             {...props}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
     );
 
     const TextArea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
         <textarea
             {...props}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
     );
 
@@ -29,13 +28,14 @@ export default function FormPage({ onClose }: { onClose: () => void }) {
         <label className="text-sm font-medium text-gray-700">{children}</label>
     );
 
+
     // ✅ Web3Forms submission logic
     const useWeb3Form = (roleType: string) => {
         const { register, handleSubmit, reset } = useForm();
         const [loading, setLoading] = useState(false);
         const [message, setMessage] = useState("");
 
-        const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const onSubmit = async (data: any) => {
             setLoading(true);
             setMessage("");
 
@@ -75,227 +75,224 @@ export default function FormPage({ onClose }: { onClose: () => void }) {
         return { register, handleSubmit, onSubmit, loading, message };
     };
 
-    // ✅ Employee form
+
+    // ✅ Shared Submit button
+    const SubmitButton = ({ loading }: { loading: boolean }) => (
+        <button
+            type="submit"
+            disabled={loading}
+            className="w-full mt-4 py-2 rounded-md font-semibold bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 
+        hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white transition"
+        >
+            {loading ? "Submitting..." : "Submit"}
+        </button>
+    );
+
+    // ✅ Wrapper for consistent layout + back/close buttons
+    const CardWrapper = ({
+        children,
+        title,
+        showBack,
+    }: {
+        children: React.ReactNode;
+        title: string;
+        showBack?: boolean;
+    }) => (
+        <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-2xl mx-auto p-6 sm:p-8 md:p-10">
+            {/* Back Button */}
+            {showBack && (
+                <button
+                    onClick={() => {
+                        if (posterType) setPosterType(null);
+                        else setRole(null);
+                    }}
+                    className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 p-2 rounded-full bg-gray-100"
+                    aria-label="Go back"
+                >
+                    <ArrowLeft className="w-5 h-5" />
+                </button>
+            )}
+            {/* Close Button */}
+            <button
+                onClick={onClose}
+                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 p-2 rounded-full bg-gray-100"
+                aria-label="Close"
+            >
+                <X className="w-5 h-5" />
+            </button>
+
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 text-center mb-6 mt-8 sm:mt-6">{title}</h2>
+            {children}
+        </div>
+    );
+
+    // ✅ Employee Form
     const EmployeeForm = () => {
         const { register, handleSubmit, onSubmit, loading, message } = useWeb3Form("employee");
 
         return (
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full space-y-5 animate-fade-in"
-            >
-                <h2 className="text-2xl font-semibold text-gray-800">Job Seeker Registration</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <Label>Name</Label>
-                        <Input {...register("name")} placeholder="John Doe" />
-                    </div>
-                    <div>
-                        <Label>Email</Label>
-                        <Input type="email" {...register("email")} placeholder="email@example.com" />
-                    </div>
-                    <div>
-                        <Label>Phone</Label>
-                        <Input type="tel" {...register("phone")} placeholder="+1234567890" />
-                    </div>
-                    <div>
-                        <Label>Sex</Label>
-                        <select
-                            {...register("sex")}
-                            className="w-full border border-gray-300 rounded-md px-4 py-2"
-                        >
-                            <option>Choose</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        <Label>Age</Label>
-                        <Input type="number" {...register("age")} placeholder="25" />
-                    </div>
-                    <div>
-                        <Label>Education</Label>
-                        <Input {...register("education")} placeholder="Bachelor's Degree" />
-                    </div>
-                    <div className="md:col-span-2">
-                        <Label>Upload Resume (PDF only)</Label>
-                        <Input type="file" accept="application/pdf" {...register("resume")} />
-                    </div>
-                </div>
-
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
-                >
-                    {loading ? "Submitting..." : "Submit"}
-                </button>
-
-                {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
-            </form>
+            <div className="sm:pt-2 pt-30">
+                <CardWrapper title="Job Seeker Registration" showBack>
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <Label>Full Name</Label>
+                                <Input {...register("name")} placeholder="Full Name" />
+                            </div>
+                            <div>
+                                <Label>Email</Label>
+                                <Input type="email" {...register("email")} placeholder="youremail@gmail.com" />
+                            </div>
+                            <div>
+                                <Label>Phone</Label>
+                                <Input type="tel" {...register("phone")} placeholder="+91 9711 123 456" />
+                            </div>
+                            <div>
+                                <Label>Gender</Label>
+                                <select
+                                    {...register("sex")}
+                                    className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base"
+                                >
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <Label>Age</Label>
+                                <Input type="number" {...register("age")} placeholder="25" />
+                            </div>
+                            <div>
+                                <Label>Highest Education</Label>
+                                <Input {...register("education")} placeholder="Bachelor's Degree" />
+                            </div>
+                            {/* <div className="sm:col-span-2">
+                                <Label>Upload Resume (PDF only)</Label>
+                                <Input type="file" accept="application/pdf" {...register("resume")} />
+                            </div> */}
+                        </div>
+                        <SubmitButton loading={loading} />
+                        {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
+                    </form>
+                </CardWrapper>
+            </div>
         );
     };
 
-    // ✅ Company form
+    // ✅ Company Form
     const CompanyForm = () => {
         const { register, handleSubmit, onSubmit, loading, message } = useWeb3Form("company");
 
         return (
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full space-y-5 animate-fade-in"
-            >
-                <h2 className="text-2xl font-semibold text-gray-800">Company Job Poster Registration</h2>
-                <div className="space-y-4">
-                    <div>
+            <div className="pt-60">
+                <CardWrapper title="Company Job Poster Registration" showBack>
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <Label>Company Name</Label>
                         <Input {...register("companyName")} placeholder="Company Inc." />
-                    </div>
-                    <div>
+
                         <Label>Description</Label>
                         <TextArea rows={4} {...register("description")} placeholder="Brief description..." />
-                    </div>
-                    <div>
+
                         <Label>Owner Name</Label>
-                        <Input {...register("ownerName")} placeholder="Jane Doe" />
-                    </div>
-                    <div>
+                        <Input {...register("ownerName")} placeholder="Full Name" />
+
                         <Label>Owner Email</Label>
                         <Input type="email" {...register("ownerEmail")} placeholder="owner@company.com" />
-                    </div>
-                    <div>
+
                         <Label>Address</Label>
                         <Input {...register("address")} placeholder="123 Business Rd, City" />
-                    </div>
-                    <div>
+
                         <Label>Socials (optional)</Label>
                         <Input {...register("socials")} placeholder="LinkedIn, Twitter, etc." />
-                    </div>
-                    <div>
+
                         <Label>Website (optional)</Label>
                         <Input {...register("website")} placeholder="https://company.com" />
-                    </div>
-                </div>
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
-                >
-                    {loading ? "Submitting..." : "Submit"}
-                </button>
-
-                {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
-            </form>
+                        <SubmitButton loading={loading} />
+                        {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
+                    </form>
+                </CardWrapper>
+            </div>
         );
     };
 
-    // ✅ Individual Poster form
+    // ✅ Individual Form
     const IndividualForm = () => {
         const { register, handleSubmit, onSubmit, loading, message } = useWeb3Form("individual");
-
         return (
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full space-y-5 animate-fade-in"
-            >
-                <h2 className="text-2xl font-semibold text-gray-800">Individual Job Poster Registration</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <Label>Name</Label>
-                        <Input {...register("name")} placeholder="John Smith" />
+            <CardWrapper title="Individual Job Poster Registration" showBack>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <Label>Full Name</Label>
+                            <Input {...register("name")} placeholder="Full Name" />
+                        </div>
+                        <div>
+                            <Label>Email</Label>
+                            <Input type="email" {...register("email")} placeholder="youremail@gmail.com" />
+                        </div>
+                        <div>
+                            <Label>Phone</Label>
+                            <Input type="tel" {...register("phone")} placeholder="+91 9711 123 456" />
+                        </div>
+                        <div className="sm:col-span-2">
+                            <Label>Address</Label>
+                            <Input {...register("address")} placeholder="123 Business Rd, City, State" />
+                        </div>
                     </div>
-                    <div>
-                        <Label>Email</Label>
-                        <Input type="email" {...register("email")} placeholder="email@example.com" />
-                    </div>
-                    <div>
-                        <Label>Phone</Label>
-                        <Input type="tel" {...register("phone")} placeholder="+1234567890" />
-                    </div>
-                    <div className="md:col-span-2">
-                        <Label>Address</Label>
-                        <Input {...register("address")} placeholder="123 Main St, City, Country" />
-                    </div>
-                </div>
-
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
-                >
-                    {loading ? "Submitting..." : "Submit"}
-                </button>
-
-                {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
-            </form>
+                    <SubmitButton loading={loading} />
+                    {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
+                </form>
+            </CardWrapper>
         );
     };
 
-    return (
-        <div className="fixed inset-0 z-[9999] bg-black/70 flex flex-col items-center justify-center overflow-y-auto p-6 sm:p-10 backdrop-blur-md">
-            {/* Close button */}
-            <button
-                onClick={onClose}
-                className="absolute top-5 right-5 text-white hover:text-gray-200 bg-black/40 p-2 rounded-full"
-                aria-label="Close"
-            >
-                <X className="w-6 h-6" />
-            </button>
-
-            {/* Back button */}
-            {role && (
+    // ✅ Selection UIs
+    const RoleSelection = () => (
+        <CardWrapper title="Choose Your Role">
+            <div className="flex flex-col gap-4">
                 <button
-                    onClick={() => (posterType ? setPosterType(null) : setRole(null))}
-                    className="absolute top-5 left-5 text-white hover:text-gray-200 bg-black/40 p-2 rounded-full"
-                    aria-label="Go back"
+                    onClick={() => setRole("employee")}
+                    className="px-6 py-3 rounded-md font-medium bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 
+            hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white transition"
                 >
-                    <ArrowLeft className="w-6 h-6" />
+                    I’m a Job Seeker
                 </button>
-            )}
+                <button
+                    onClick={() => setRole("employer")}
+                    className="px-6 py-3 rounded-md font-medium bg-gray-100 hover:bg-gray-200 text-gray-800 transition"
+                >
+                    I’m a Job Poster
+                </button>
+            </div>
+        </CardWrapper>
+    );
 
-            {/* Role selection */}
-            {!role && (
-                <div className="text-center space-y-6 my-auto max-w-sm w-full">
-                    <h1 className="text-2xl sm:text-3xl font-bold text-white">Choose Your Role</h1>
-                    <div className="flex flex-col gap-3">
-                        <button
-                            onClick={() => setRole("employee")}
-                            className="bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition"
-                        >
-                            I’m a Job Seeker
-                        </button>
-                        <button
-                            onClick={() => setRole("employer")}
-                            className="bg-white/90 text-blue-600 px-6 py-3 rounded-md font-medium hover:bg-blue-50 transition"
-                        >
-                            I’m a Job Poster
-                        </button>
-                    </div>
-                </div>
-            )}
+    const PosterSelection = () => (
+        <CardWrapper title="Post a Job As" showBack>
+            <div className="flex flex-col gap-4">
+                <button
+                    onClick={() => setPosterType("individual")}
+                    className="px-6 py-3 rounded-md font-medium bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 
+            hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white transition"
+                >
+                    Individual
+                </button>
+                <button
+                    onClick={() => setPosterType("company")}
+                    className="px-6 py-3 rounded-md font-medium bg-gray-100 hover:bg-gray-200 text-gray-800 transition"
+                >
+                    Company
+                </button>
+            </div>
+        </CardWrapper>
+    );
 
+    return (
+        <div className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto">
+            {!role && <RoleSelection />}
             {role === "employee" && <EmployeeForm />}
-            {role === "employer" && !posterType && (
-                <div className="text-center space-y-6 my-auto max-w-sm w-full">
-                    <h2 className="text-2xl font-semibold text-white">Post a Job As</h2>
-                    <div className="flex flex-col gap-3">
-                        <button
-                            onClick={() => setPosterType("individual")}
-                            className="bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition"
-                        >
-                            Individual
-                        </button>
-                        <button
-                            onClick={() => setPosterType("company")}
-                            className="bg-white/90 text-blue-600 px-6 py-3 rounded-md font-medium hover:bg-blue-50 transition"
-                        >
-                            Company
-                        </button>
-                    </div>
-                </div>
-            )}
+            {role === "employer" && !posterType && <PosterSelection />}
             {role === "employer" && posterType === "company" && <CompanyForm />}
             {role === "employer" && posterType === "individual" && <IndividualForm />}
         </div>
