@@ -1,143 +1,343 @@
-'use client'
+"use client";
 
-import { ArrowRight } from 'lucide-react'
-import Image from 'next/image'
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { useFormContext } from "@/context/FormContext";
+import { fadeUp } from "@/lib/animations";
 
-
+const stats = [
+  { value: "1,200+", label: "Professionals placed" },
+  { value: "12 days", label: "Average time to fill" },
+  { value: "89%", label: "Still employed after 2 years" },
+  { value: "₹24 Cr", label: "Saved in rehiring costs" },
+];
 
 export default function Hero() {
-
-
   const { openForm } = useFormContext();
 
-
   return (
-    <section
-      className="relative min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] lg:min-h-[calc(100vh-80px)] pt-[40px] sm:pt-[44px] lg:pt-[50px] pb-8 sm:pb-12 lg:pb-16 flex items-center justify-center bg-gradient-to-b from-white via-gray-50 to-white px-4 sm:px-6"
-    >
-      {/* Clean Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(59,130,246,0.03)_0%,_transparent_50%)]" />
-      </div>
+    <section className="relative min-h-screen flex flex-col justify-center bg-white overflow-hidden pt-[68px]">
+      {/* Ambient light — behind the right card stack */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-0 top-0 bottom-0 w-1/2"
+        style={{
+          background:
+            "radial-gradient(ellipse at 80% 45%, rgba(23,143,191,0.06) 0%, transparent 60%)",
+        }}
+      />
 
-      {/* Main Content */}
-      <div className="container mx-auto relative z-10 w-full max-w-6xl">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
-          {/* Left Content */}
-          <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-200/60">
-              <div className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span className="text-xs font-bold text-emerald-700 tracking-wider">
-                ₹0 UPFRONT • GUARANTEED RESULTS
-              </span>
-            </div>
+      <div className="container-editorial relative z-10 py-20 md:py-28">
+        {/* 58 / 42 split — gives left column ~650px at 1280px viewport */}
+        <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] gap-14 lg:gap-8 items-start">
 
-            {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[0.95] tracking-tight">
-                <span className="block">Hire the</span>
-                <span className="block text-gradient-premium">Perfect Candidate</span>
-                <span className="block">in <span className="text-primary-600">12 Days</span></span>
-                <span className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-600 mt-2">
-                  or it&apos;s completely free
-                </span>
-              </h1>
+          {/* ── Left: Copy ─────────────────────────────────────── */}
+          <div>
+            <motion.p
+              className="text-eyebrow mb-7"
+              variants={fadeUp}
+              custom={0}
+              initial="hidden"
+              animate="show"
+            >
+              Performance-based recruitment · India
+            </motion.p>
 
-              <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                India&apos;s only recruitment platform with a <span className="text-gray-900 font-bold">90-day performance guarantee.</span>
+            {/* Headline — size scoped so both lines stay on one line each in split layout */}
+            <motion.h1
+              variants={fadeUp}
+              custom={1}
+              initial="hidden"
+              animate="show"
+              style={{
+                fontFamily:
+                  "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                fontSize: "clamp(2.75rem, 5.5vw, 5rem)",
+                lineHeight: 1.0,
+                letterSpacing: "-0.03em",
+                fontWeight: 400,
+              }}
+            >
+              The hire that works.
+              <br />
+              <em style={{ fontStyle: "italic", color: "#178fbf" }}>
+                Or you don&apos;t pay.
+              </em>
+            </motion.h1>
+
+            <motion.p
+              className="text-subhead text-[#525252] max-w-lg mt-7 md:mt-8"
+              variants={fadeUp}
+              custom={2}
+              initial="hidden"
+              animate="show"
+            >
+              Culture-matched candidates shortlisted in 48 hours. Placed in 12 days.
+              Zero fees until your hire completes 90 days — or we fill the role again, free.
+            </motion.p>
+
+            <motion.div
+              className="mt-9"
+              variants={fadeUp}
+              custom={3}
+              initial="hidden"
+              animate="show"
+            >
+              <div className="flex flex-wrap items-center gap-4">
+                <button onClick={openForm} className="btn-primary text-[15px]">
+                  Start hiring <span aria-hidden="true">→</span>
+                </button>
+                <a href="#process" className="btn-text text-[15px]">
+                  See how it works
+                </a>
+              </div>
+              <p
+                className="mt-3.5 text-[0.8125rem] text-[#b0b0b0]"
+                style={{
+                  fontFamily:
+                    "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                }}
+              >
+                First placement free &nbsp;·&nbsp; No contracts &nbsp;·&nbsp; No setup fees
               </p>
-            </div>
-
-            {/* Value Props */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto lg:mx-0">
-              {[
-                { title: 'Zero Risk', desc: 'Pay after 90 days', color: 'emerald' },
-                { title: 'Fast', desc: '12-day delivery', color: 'blue' },
-                { title: 'Proven', desc: '89% retention', color: 'purple' }
-              ].map((item, index) => (
-                <div key={index} className={`p-3 rounded-xl bg-gradient-to-br from-${item.color}-50 to-${item.color}-100/50 border border-${item.color}-200/50`}>
-                  <div className={`text-sm font-bold text-${item.color}-900`}>{item.title}</div>
-                  <div className={`text-xs text-${item.color}-700`}>{item.desc}</div>
-                </div>
-              ))}
-            </div>
-
-
-            {/* CTA */}
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0">
-                <button onClick={openForm} className="group relative overflow-hidden flex-1 min-h-[56px] px-8 py-4 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white rounded-2xl font-bold text-lg shadow-xl shadow-primary-900/30 hover:shadow-2xl hover:shadow-primary-900/50 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] border border-primary-500/20 hover:border-primary-400/40">
-                  <span className="flex items-center justify-center gap-3">
-                    Start Hiring
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-                  </span>
-                </button>
-                <button className="relative min-h-[56px] px-8 py-4 border border-gray-300/60 hover:border-primary-300/80 text-gray-700 hover:text-primary-700 rounded-2xl font-semibold text-lg bg-white/80 hover:bg-gradient-to-br hover:from-white hover:to-primary-50/30 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[0.5px] shadow-sm shadow-gray-200/50 hover:shadow-lg hover:shadow-primary-200/30 backdrop-blur-sm">
-                  ROI Calculator
-                </button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-gray-500">
-                <span className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
-                  No contracts
-                </span>
-                <span className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-blue-500" />
-                  2-min setup
-                </span>
-                <span className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-purple-500" />
-                  300+ companies
-                </span>
-              </div>
-            </div>
-
+            </motion.div>
 
             {/* Stats */}
-            <div className="pt-6 border-t border-gray-200">
-              <div className="flex items-center justify-center lg:justify-start gap-8">
-                <div className="text-center">
-                  <div className="text-2xl font-black text-green-600">1,200+</div>
-                  <div className="text-sm text-gray-600">Hires</div>
+            <motion.div
+              className="mt-12 pt-8 border-t border-[#e4e4e4]"
+              variants={fadeUp}
+              custom={4}
+              initial="hidden"
+              animate="show"
+            >
+              <div className="grid grid-cols-2 gap-y-7 gap-x-8">
+                {stats.map((stat) => (
+                  <div key={stat.value}>
+                    <p
+                      className="leading-none tracking-tight"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                        fontStyle: "italic",
+                        fontSize: "1.875rem",
+                        color: "#0a0a0a",
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {stat.value}
+                    </p>
+                    <p
+                      className="text-[0.8125rem] text-[#909090] mt-1.5"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ── Right: Proof card stack ─────────────────────────── */}
+          <motion.div
+            className="hidden lg:flex flex-col gap-3 lg:pt-1"
+            variants={fadeUp}
+            custom={2}
+            initial="hidden"
+            animate="show"
+          >
+            {/* Card 1: Live placement */}
+            <div className="bg-white border border-[#e4e4e4] rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.06)]">
+              <div className="flex items-center justify-between mb-5">
+                <p
+                  className="text-[0.6875rem] tracking-[0.09em] uppercase font-[500] text-[#909090]"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                  }}
+                >
+                  Recent placement
+                </p>
+                <span
+                  className="flex items-center gap-1.5 text-[0.75rem] font-[500] text-[#16a34a]"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                  }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse" />
+                  Guarantee active
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 mb-5">
+                <div
+                  className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center text-[0.8125rem] font-[500]"
+                  style={{
+                    background: "#e8f4f8",
+                    color: "#178fbf",
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                  }}
+                >
+                  JS
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-black text-primary-600">12</div>
-                  <div className="text-sm text-gray-600">Days</div>
+                <div>
+                  <p
+                    className="text-[0.9375rem] font-[500] text-[#0a0a0a] leading-tight"
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    }}
+                  >
+                    Jayesh Sharma
+                  </p>
+                  <p
+                    className="text-[0.8125rem] text-[#909090] mt-0.5"
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    }}
+                  >
+                    Senior Finance Manager · Mumbai
+                  </p>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-black text-purple-600">₹24Cr</div>
-                  <div className="text-sm text-gray-600">Saved</div>
+              </div>
+
+              <div className="flex items-end justify-between pt-4 border-t border-[#f0f0f0]">
+                <div>
+                  <p
+                    className="text-[0.75rem] text-[#909090] mb-1"
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    }}
+                  >
+                    Time to placement
+                  </p>
+                  <p
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                      fontStyle: "italic",
+                      fontSize: "1.75rem",
+                      color: "#f7a261",
+                      letterSpacing: "-0.02em",
+                      lineHeight: 1,
+                    }}
+                  >
+                    9 days
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p
+                    className="text-[0.75rem] text-[#909090] mb-1"
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    }}
+                  >
+                    Fee due today
+                  </p>
+                  <p
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                      fontStyle: "italic",
+                      fontSize: "1.75rem",
+                      color: "#0a0a0a",
+                      letterSpacing: "-0.02em",
+                      lineHeight: 1,
+                    }}
+                  >
+                    ₹0
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Side - Simple SVG */}
-          <div className="relative">
-            <div className="sticky top-[100px]">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary-100/20 to-accent-100/20 rounded-3xl transform rotate-6 scale-110" />
-                <div className="relative p-6">
+            {/* Card 2: Client quote — inset offset creates depth */}
+            <div className="mx-5 bg-[#f8f8f8] border border-[#e4e4e4] rounded-2xl p-5">
+              <p
+                className="text-[0.9375rem] text-[#333] leading-relaxed mb-4"
+                style={{
+                  fontFamily:
+                    "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                  fontStyle: "italic",
+                }}
+              >
+                &ldquo;The placement was done in under 2 weeks. We&apos;ve never
+                had that speed or quality from an agency before.&rdquo;
+              </p>
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full overflow-hidden shrink-0">
                   <Image
-                    src="/illustrations/undraw_artificial-intelligence_43qa.svg"
-                    alt="AI-Powered Recruitment"
-                    width={280}
-                    height={220}
-                    className="max-w-[200px] mx-auto"
-                    style={{ width: "auto", height: "auto" }}
+                    src="/ankit_pic.jpg"
+                    alt="Ankit Sapra"
+                    width={28}
+                    height={28}
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
+                <p
+                  className="text-[0.75rem] text-[#909090]"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                  }}
+                >
+                  Ankit Sapra &nbsp;·&nbsp; Chairman, Cosmos Financial Group
+                </p>
               </div>
             </div>
-          </div>
+
+            {/* Card 3: Guarantee — blue, editorial, further inset */}
+            <div
+              className="mx-10 rounded-2xl p-5 flex items-center justify-between gap-4"
+              style={{ background: "#178fbf" }}
+            >
+              <div>
+                <p
+                  className="text-white/60 text-[0.6875rem] tracking-[0.07em] uppercase font-[500] mb-1.5"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                  }}
+                >
+                  Performance guarantee
+                </p>
+                <p
+                  className="text-white text-[0.9375rem] leading-snug"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                  }}
+                >
+                  Free replacement if your hire leaves within 90 days
+                </p>
+              </div>
+              <p
+                className="shrink-0"
+                style={{
+                  fontFamily:
+                    "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                  fontStyle: "italic",
+                  fontSize: "3rem",
+                  color: "#f7a261",
+                  letterSpacing: "-0.04em",
+                  lineHeight: 1,
+                }}
+              >
+                90
+              </p>
+            </div>
+          </motion.div>
+
         </div>
       </div>
-
-
     </section>
-  )
+  );
 }

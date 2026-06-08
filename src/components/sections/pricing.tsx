@@ -1,375 +1,262 @@
-'use client'
+"use client";
 
-import { Check, Sparkles, Zap, Crown, Shield } from 'lucide-react'
-import Image from 'next/image'
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { Check } from "lucide-react";
+import { useFormContext } from "@/context/FormContext";
+import { fadeUpFast as fadeUp } from "@/lib/animations";
 
-const pricingPlans = [
+const plans = [
   {
-    name: 'Trial',
-    price: '₹0',
-    period: 'for first hire',
-    description: 'Test our guarantee with zero risk',
-    icon: Sparkles,
-    color: 'from-green-500 to-green-600',
-    bgColor: 'from-green-50 to-green-100',
-    outcomes: [
-      'Fill 1 position completely free',
-      'Experience our 12-day process',
-      'Meet your dedicated recruiter',
-      '90-day retention guarantee'
+    name: "Trial",
+    badge: "Free to start",
+    price: "₹0",
+    priceNote: "for your first hire",
+    description: "Test our 12-day process with zero financial risk.",
+    features: [
+      "One placement, completely free",
+      "Full 12-day delivery commitment",
+      "Dedicated recruiter assigned",
+      "90-day performance guarantee",
     ],
-    limitations: [
-      'One active position only',
-      'Standard candidate pool',
-      'Email + chat support'
-    ],
-    cta: 'Start Free Trial',
-    popular: false,
-    badge: '100% FREE',
-    savings: 'Save ₹1-3L vs traditional agencies'
+    cta: "Start free",
+    ctaVariant: "ghost" as const,
   },
   {
-    name: 'Growth',
-    price: '₹80K',
-    period: 'per successful hire',
-    description: 'Perfect for growing SMEs and mid-sized companies',
-    icon: Zap,
-    color: 'from-primary-500 to-primary-600',
-    bgColor: 'from-primary-50 to-blue-50',
-    outcomes: [
-      'Fill unlimited positions',
-      'Access premium talent pool',
-      'Dedicated account manager',
-      '2-year replacement guarantee',
-      'Salary negotiation included'
+    name: "Standard",
+    badge: "Most popular",
+    price: "₹80,000",
+    priceNote: "per successful placement",
+    description:
+      "For growing companies. Unlimited roles, full guarantee, dedicated support.",
+    features: [
+      "Unlimited simultaneous roles",
+      "Access to premium talent pool",
+      "Dedicated account manager",
+      "90-day performance guarantee",
+      "2-year free replacement guarantee",
+      "Salary negotiation included",
+      "28 Indian states covered",
     ],
-    businessImpact: {
-      roi: '150% average ROI in Year 1',
-      cost: '60% less than traditional agencies',
-      speed: '5x faster than internal hiring'
-    },
-    cta: 'Start Hiring Now',
-    popular: true,
-    badge: 'BEST VALUE',
-    savings: '₹0 if we don\'t deliver'
+    cta: "Start hiring",
+    ctaVariant: "primary" as const,
+    highlighted: true,
   },
   {
-    name: 'Enterprise',
-    price: 'Custom',
-    period: 'pricing',
-    description: 'Complete talent acquisition partnership',
-    icon: Crown,
-    color: 'from-purple-500 to-purple-600',
-    bgColor: 'from-purple-50 to-purple-100',
-    outcomes: [
-      'Everything in Growth plan',
-      'C-level and leadership search',
-      'Custom talent pipelines',
-      'Dedicated recruitment team',
-      'Advanced analytics & reporting'
+    name: "Enterprise",
+    badge: "White glove",
+    price: "Custom",
+    priceNote: "volume pricing",
+    description:
+      "For large organisations. C-suite search, dedicated team, same-week delivery.",
+    features: [
+      "Everything in Standard",
+      "C-suite and leadership search",
+      "Dedicated recruitment team",
+      "Custom talent pipelines",
+      "Same-week candidate delivery",
+      "Advanced analytics and reporting",
+      "Volume discounts available",
     ],
-    businessImpact: {
-      roi: 'Guaranteed positive ROI',
-      cost: 'Predictable monthly investment',
-      speed: 'Same-week candidate delivery'
-    },
-    cta: 'Book Strategy Call',
-    popular: false,
-    badge: 'WHITE GLOVE',
-    savings: 'Volume discounts available'
-  }
-]
+    cta: "Talk to us",
+    ctaVariant: "ghost" as const,
+  },
+];
+
 
 export default function Pricing() {
+  const { openForm } = useFormContext();
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
-    <section
-      className="relative py-24 lg:py-32 bg-white"
-    >
-      {/* Clean Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
-      </div>
-
-      <div className="container px-6 mx-auto">
+    <section id="pricing" ref={ref} className="section-padding bg-white">
+      <div className="container-editorial">
         {/* Header */}
-        <div className="max-w-4xl mx-auto text-center mb-20">
-          <div
-            className="space-y-6"
+        <div className="mb-14 md:mb-16">
+          <motion.p
+            className="text-eyebrow mb-5"
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            animate={inView ? "show" : "hidden"}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-200 text-primary-700 mb-6">
-              <Crown className="w-4 h-4" />
-              <span className="text-sm font-semibold tracking-wide">INDIA&apos;S MOST AFFORDABLE RECRUITMENT SOLUTION</span>
-            </div>
-
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] text-gray-900">
-              Stop Wasting Money on
-              <span className="block text-red-600">Failed Hires</span>
-            </h2>
-
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed mb-8">
-              Traditional agencies charge ₹1-3L upfront, then disappear.
-              <span className="block mt-2 font-semibold text-gray-900">We only get paid when your hire completes 90 days.</span>
-            </p>
-
-            <div className="bg-red-50 border border-red-200 rounded-xl p-6 mb-8">
-              <h3 className="text-lg font-bold text-red-800 mb-2">The Hidden Cost of Empty Desks:</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-red-700">
-                <div>• ₹15L+ revenue loss per unfilled position</div>
-                <div>• 40% productivity drop in affected teams</div>
-                <div>• 6-8 months average hiring time</div>
-                <div>• 64% of hires fail within 18 months</div>
-              </div>
-            </div>
-
-            {/* Risk Reversal */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-xl border border-blue-200">
-                <Shield className="w-6 h-6 text-blue-600" />
-                <div>
-                  <p className="font-semibold text-blue-800">Zero Risk Guarantee</p>
-                  <p className="text-sm text-blue-600">If we don&apos;t deliver, you don&apos;t pay. Period.</p>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <p className="text-lg font-medium text-gray-700 mb-2">
-                  Which plan matches your hiring volume?
-                </p>
-                <p className="text-sm text-gray-500">
-                  All plans include our 90-day retention guarantee
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Pricing Illustration */}
-          <div className="flex justify-center">
-            <Image
-              src="/illustrations/undraw_growth-analytics_bhy7.svg"
-              alt="Growth Analytics"
-              width={400}
-              height={300}
-              style={{ width: "auto", height: "auto" }}
-              className="max-w-md"
-            />
-          </div>
+            Pricing
+          </motion.p>
+          <motion.h2
+            className="text-heading"
+            variants={fadeUp}
+            custom={1}
+            initial="hidden"
+            animate={inView ? "show" : "hidden"}
+          >
+            Honest pricing.
+            <br />
+            <em style={{ fontStyle: "italic", color: "#178fbf" }}>No surprises.</em>
+          </motion.h2>
+          <motion.p
+            className="text-body mt-4 max-w-lg"
+            variants={fadeUp}
+            custom={2}
+            initial="hidden"
+            animate={inView ? "show" : "hidden"}
+          >
+            You only pay when the hire works. That&apos;s the whole model. No retainers,
+            no setup fees, no hidden costs. 60% cheaper than traditional Indian
+            agencies — and far more accountable.
+          </motion.p>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {pricingPlans.map((plan, index) => (
-            <div
-              key={index}
-              className={`group relative ${
-                plan.popular ? 'lg:scale-105 lg:-mt-4' : ''
+        {/* Plans */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {plans.map((plan, i) => (
+            <motion.div
+              key={plan.name}
+              className={`relative flex flex-col rounded-xl border p-8 md:p-9 ${
+                plan.highlighted
+                  ? "border-[#178fbf] bg-white"
+                  : "border-[#e4e4e4] bg-white"
               }`}
+              variants={fadeUp}
+              custom={i + 3}
+              initial="hidden"
+              animate={inView ? "show" : "hidden"}
             >
               {/* Badge */}
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-10">
-                <div className={`px-4 py-2 text-xs font-bold tracking-wider rounded-full border-2 ${
-                  plan.popular
-                    ? 'bg-gradient-to-r from-primary-600 to-accent-600 text-white border-white shadow-lg'
-                    : plan.name === 'Free Forever'
-                    ? 'bg-green-500 text-white border-green-400 shadow-md'
-                    : 'bg-gray-800 text-white border-gray-700 shadow-md'
-                }`}>
-                  {plan.badge}
-                </div>
-              </div>
-
-              <div className={`relative p-8 lg:p-10 bg-white rounded-3xl border-2 ${
-                plan.popular
-                  ? 'border-primary-200 shadow-2xl shadow-primary-100/50'
-                  : 'border-gray-200 group-hover:border-primary-200 group-hover:shadow-xl'
-              } h-full flex flex-col`}>
-
-                {/* Sophisticated background gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${plan.bgColor} opacity-0`} />
-
-                {/* Animated corner accent */}
-                <div className="absolute top-0 right-0 w-24 h-24 opacity-20">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${plan.color} rounded-bl-full`} />
-                </div>
-
-                {/* Icon with premium styling */}
-                <div className="relative mb-8">
-                  <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${plan.color} text-white shadow-lg`}>
-                    <plan.icon className="w-8 h-8 text-white relative z-10" strokeWidth={2} />
-                  </div>
-                </div>
-
-                {/* Plan details */}
-                <div className="relative space-y-6 mb-8">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                    <p className="text-gray-600 leading-relaxed">{plan.description}</p>
-                  </div>
-
-                  {/* Pricing display */}
-                  <div className="space-y-4">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-4xl lg:text-5xl font-black text-gray-900">
-                        {plan.price}
-                      </span>
-                      <span className="text-lg text-gray-600 font-medium">
-                        {plan.period}
-                      </span>
-                    </div>
-
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                      <p className="text-sm font-semibold text-green-700">
-                        {plan.savings}
-                      </p>
-                    </div>
-
-                    {plan.businessImpact && (
-                      <div className="grid grid-cols-1 gap-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">ROI:</span>
-                          <span className="font-semibold text-primary-600">{plan.businessImpact.roi}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Cost vs competitors:</span>
-                          <span className="font-semibold text-green-600">{plan.businessImpact.cost}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Speed:</span>
-                          <span className="font-semibold text-blue-600">{plan.businessImpact.speed}</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Business Outcomes */}
-                <div className="space-y-6 mb-10 flex-grow">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-4">What You Get:</h4>
-                    <ul className="space-y-3">
-                      {plan.outcomes.map((outcome, outcomeIndex) => (
-                        <li
-                          key={outcomeIndex}
-                          className="flex items-start gap-3"
-                        >
-                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                            <Check className="w-3 h-3 text-green-600" />
-                          </div>
-                          <span className="text-gray-700">{outcome}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {plan.limitations && (
-                    <div>
-                      <h4 className="font-semibold text-gray-700 mb-3 text-sm">Includes:</h4>
-                      <ul className="space-y-2">
-                        {plan.limitations.map((limitation, limitIndex) => (
-                          <li key={limitIndex} className="flex items-start gap-2">
-                            <div className="w-1 h-1 rounded-full bg-gray-400 mt-2 flex-shrink-0" />
-                            <span className="text-sm text-gray-500">{limitation}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-
-                {/* CTA */}
-                <button
-                  className={`relative overflow-hidden w-full py-4 rounded-2xl font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] ${
-                    plan.popular
-                      ? 'bg-gradient-to-br from-primary-600 via-primary-700 to-accent-600 hover:from-primary-500 hover:via-primary-600 hover:to-accent-500 text-white shadow-xl shadow-primary-900/30 hover:shadow-2xl hover:shadow-primary-900/50 border border-primary-500/20 hover:border-primary-400/40'
-                      : plan.name === 'Trial'
-                      ? 'bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 hover:from-green-400 hover:via-green-500 hover:to-emerald-500 text-white shadow-lg shadow-green-900/25 hover:shadow-xl hover:shadow-green-900/40 border border-green-400/20 hover:border-green-300/40'
-                      : 'bg-gradient-to-br from-gray-800 via-gray-900 to-slate-900 hover:from-gray-700 hover:via-gray-800 hover:to-slate-800 text-white shadow-lg shadow-gray-900/30 hover:shadow-xl hover:shadow-gray-900/50 border border-gray-600/20 hover:border-gray-500/40'
-                  }`}
+              <div className="flex items-center justify-between mb-8">
+                <p
+                  className="text-[0.75rem] font-[500] tracking-[0.06em] uppercase"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    color: plan.highlighted ? "#178fbf" : "#909090",
+                  }}
                 >
-                  <span className="relative z-10">{plan.cta}</span>
-                  {plan.popular && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent-600 to-primary-700 opacity-0 hover:opacity-10 transition-opacity duration-200" />
-                  )}
-                </button>
+                  {plan.badge}
+                </p>
+                <p
+                  className="text-[0.75rem] font-[500] tracking-[0.04em] uppercase"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    color: "#d4d4d4",
+                  }}
+                >
+                  {plan.name}
+                </p>
               </div>
-            </div>
+
+              {/* Price */}
+              <div className="mb-6">
+                <p
+                  className="leading-none"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                    fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
+                    letterSpacing: "-0.03em",
+                    color: "#0a0a0a",
+                  }}
+                >
+                  {plan.price}
+                </p>
+                <p
+                  className="text-[0.8125rem] text-[#909090] mt-1.5"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                  }}
+                >
+                  {plan.priceNote}
+                </p>
+              </div>
+
+              {/* Description */}
+              <p
+                className="text-[0.9375rem] text-[#525252] mb-8 leading-relaxed"
+                style={{
+                  fontFamily:
+                    "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                }}
+              >
+                {plan.description}
+              </p>
+
+              {/* Features */}
+              <ul className="flex flex-col gap-3 mb-10 flex-1">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2.5">
+                    <Check
+                      className="shrink-0 mt-0.5"
+                      size={14}
+                      style={{ color: plan.highlighted ? "#178fbf" : "#909090" }}
+                    />
+                    <span
+                      className="text-[0.875rem] text-[#525252] leading-snug"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA */}
+              <button
+                onClick={openForm}
+                className={plan.ctaVariant === "primary" ? "btn-primary justify-center" : "btn-ghost justify-center"}
+              >
+                {plan.cta} <span aria-hidden="true">→</span>
+              </button>
+            </motion.div>
           ))}
         </div>
 
-        {/* Bottom Section */}
-        <div className="mt-24 space-y-16">
-          {/* Guarantee Section */}
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-12 text-white text-center">
-              <div className="space-y-8">
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-green-500 rounded-full">
-                  <Check className="w-5 h-5 text-white" />
-                  <span className="font-bold text-white">PERFORMANCE GUARANTEE</span>
-                </div>
-
-                <h3 className="text-4xl font-black">
-                  We&apos;re So Confident, We&apos;ll Work For Free
-                </h3>
-
-                <div className="max-w-2xl mx-auto space-y-6">
-                  <p className="text-xl text-gray-200 leading-relaxed">
-                    If we don&apos;t fill your position within 12 days, or if your hire leaves within 90 days,
-                    <span className="text-yellow-400 font-semibold"> we refund every rupee.</span>
-                  </p>
-
-                  <div className="grid md:grid-cols-2 gap-6 text-left">
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-green-400">What We Guarantee:</h4>
-                      <ul className="space-y-2 text-sm text-gray-300">
-                        <li>✓ Position filled within 12 days</li>
-                        <li>✓ Hire stays minimum 90 days</li>
-                        <li>✓ Free replacement if they leave</li>
-                        <li>✓ Full refund if we fail</li>
-                      </ul>
-                    </div>
-
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-yellow-400">Your Investment:</h4>
-                      <ul className="space-y-2 text-sm text-gray-300">
-                        <li>✓ ₹0 upfront costs</li>
-                        <li>✓ No retainer fees</li>
-                        <li>✓ No hidden charges</li>
-                        <li>✓ Pay only for results</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* Guarantee bar */}
+        <motion.div
+          className="mt-8 rounded-xl p-7 md:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8"
+          style={{ background: "#178fbf" }}
+          variants={fadeUp}
+          custom={7}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+        >
+          <div className="flex-1">
+            <p
+              className="text-white text-[1rem] font-[500] mb-1"
+              style={{
+                fontFamily:
+                  "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+              }}
+            >
+              90-day performance guarantee on every placement.
+            </p>
+            <p
+              className="text-white/70 text-[0.875rem]"
+              style={{
+                fontFamily:
+                  "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+              }}
+            >
+              If your hire leaves within 90 days, we return and fill the role at no
+              additional cost. No questions asked.
+            </p>
           </div>
-
-          {/* Enterprise CTA */}
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <div className="space-y-4">
-              <h3 className="text-3xl font-bold text-gray-900">
-                Still Not Sure? Let&apos;s Talk.
-              </h3>
-              <p className="text-lg text-gray-600">
-                Book a 15-minute call to discuss your specific hiring challenges.
-                <span className="block mt-2 font-semibold">No sales pitch, just honest advice.</span>
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="relative overflow-hidden px-8 py-4 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white rounded-xl font-semibold text-lg shadow-lg shadow-primary-900/25 hover:shadow-xl hover:shadow-primary-900/40 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[1px] border border-primary-500/20 hover:border-primary-400/30">
-                Book Free Consultation
-              </button>
-              <button className="relative px-8 py-4 border border-gray-300/60 hover:border-primary-300/80 text-gray-700 hover:text-primary-700 rounded-xl font-semibold text-lg bg-white/80 hover:bg-gradient-to-br hover:from-white hover:to-primary-50/30 active:scale-[0.98] transition-all duration-250 hover:-translate-y-[0.5px] shadow-sm shadow-gray-200/50 hover:shadow-lg hover:shadow-primary-200/30 backdrop-blur-sm">
-                Calculate Your Savings
-              </button>
-            </div>
-
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-              <Shield className="w-4 h-4" />
-              <span>15-minute consultation • Zero commitment • Actionable insights guaranteed</span>
-            </div>
-          </div>
-        </div>
+          <button
+            onClick={openForm}
+            className="shrink-0 inline-flex items-center gap-1.5 bg-white text-[#178fbf] text-[14px] font-[500] px-5 py-2.5 rounded-md hover:bg-white/90 transition-colors"
+            style={{
+              fontFamily:
+                "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+            }}
+          >
+            Claim guarantee <span aria-hidden="true">→</span>
+          </button>
+        </motion.div>
       </div>
     </section>
-  )
+  );
 }

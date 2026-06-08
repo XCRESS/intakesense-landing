@@ -1,39 +1,41 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { FormProvider } from "@/context/FormContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
-  display: 'swap',
+  weight: ["400", "500", "600"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
-  display: 'swap',
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Intakesense - AI-Powered Recruitment Platform",
-    template: "%s | Intakesense"
+    default: "Intakesense — Talent Acquisition, Guaranteed",
+    template: "%s | Intakesense",
   },
-  description: "Guaranteed placements in 12 days or it's free. AI-powered recruitment platform with full responsibility guarantee. Transform your hiring process with intelligent candidate matching and automated workflows.",
+  description:
+    "India's only recruitment platform with a 12-day delivery and 90-day performance guarantee. AI-powered talent acquisition with ₹0 upfront — you only pay when it works.",
   keywords: [
-    "AI recruitment",
-    "hiring platform",
+    "recruitment India",
+    "talent acquisition India",
     "guaranteed placement",
-    "talent acquisition",
-    "recruitment automation",
-    "candidate matching",
-    "HR technology",
+    "AI recruitment platform",
+    "hire candidates India",
+    "HR technology India",
     "recruitment guarantee",
-    "AI hiring",
-    "recruitment software",
+    "performance-based hiring",
+    "top recruitment agency India",
     "placement services",
-    "hiring solution"
   ],
   authors: [{ name: "Intakesense", url: "https://intakesense.com" }],
   creator: "Intakesense",
@@ -41,31 +43,26 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://intakesense.com"),
   alternates: {
     canonical: "/",
-    languages: {
-      "en-US": "/en-US",
-      "en": "/en"
-    }
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.png',
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.png",
   },
-  manifest: '/manifest.json',
+  manifest: "/manifest.json",
   openGraph: {
-    title: "Intakesense - AI-Powered Recruitment Platform",
-    description: "Guaranteed placements in 12 days or it's free. AI-powered recruitment with full responsibility guarantee.",
+    title: "Intakesense — Talent Acquisition, Guaranteed",
+    description:
+      "India's only recruitment platform with a 12-day delivery and 90-day performance guarantee.",
     url: "https://intakesense.com",
     siteName: "Intakesense",
-    locale: "en_US",
+    locale: "en_IN",
     type: "website",
     images: [
       {
-        url: '/logo.png',
-        secureUrl: 'https://intakesense.com/logo.png',
-        // Remove incorrect dimensions - let WhatsApp detect actual size
-        alt: 'Intakesense - AI-Powered Recruitment Platform',
-        type: 'image/png',
+        url: "/logo.png",
+        alt: "Intakesense — Talent Acquisition, Guaranteed",
+        type: "image/png",
       },
     ],
   },
@@ -73,50 +70,30 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@intakesense",
     creator: "@intakesense",
-    title: "Intakesense - AI-Powered Recruitment Platform",
-    description: "Guaranteed placements in 12 days or it's free. AI-powered recruitment with responsibility guarantee.",
-    images: [
-      {
-        url: '/logo.png',
-        alt: 'Intakesense - AI-Powered Recruitment Platform',
-      },
-    ],
+    title: "Intakesense — Talent Acquisition, Guaranteed",
+    description:
+      "India's only recruitment platform with a 12-day delivery and 90-day performance guarantee.",
+    images: [{ url: "/logo.png", alt: "Intakesense" }],
   },
   robots: {
     index: true,
     follow: true,
-    nocache: false,
     googleBot: {
       index: true,
       follow: true,
-      noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
-  category: 'technology',
-  classification: 'Recruitment Technology',
-  referrer: 'origin-when-cross-origin',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  verification: {
-    // Add your verification codes when available
-    // google: 'your-google-site-verification-code',
-    // yandex: 'your-yandex-verification-code',
-    // bing: 'your-bing-site-verification-code',
-  },
+  category: "Recruitment Technology",
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0066FF',
-  width: 'device-width',
+  themeColor: "#178fbf",
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-}
+};
 
 export default function RootLayout({
   children,
@@ -124,11 +101,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${instrumentSans.variable} ${instrumentSerif.variable} antialiased`}
       >
-        {/* <CursorFollower className="hidden lg:block" /> */}
         <FormProvider>{children}</FormProvider>
       </body>
     </html>

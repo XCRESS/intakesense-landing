@@ -1,300 +1,343 @@
 "use client";
 
-import React, { useState } from "react";
-import { X, ArrowLeft } from "lucide-react";
-import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { X } from "lucide-react";
 
+interface FormPageProps {
+  onClose: () => void;
+}
 
-export default function FormPage({ onClose }: { onClose: () => void }) {
-    const [role, setRole] = useState<"employee" | "employer" | null>(null);
-    const [posterType, setPosterType] = useState<"company" | "individual" | null>(null);
+type Intent = "hiring" | "seeking" | "";
 
-    // ✅ Reusable components
-    const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
-        <input
-            {...props}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-        />
-    );
+export default function FormPage({ onClose }: FormPageProps) {
+  const [intent, setIntent] = useState<Intent>("");
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: "",
+  });
 
-    const TextArea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
-        <textarea
-            {...props}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-        />
-    );
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
 
-    const Label = ({ children }: { children: React.ReactNode }) => (
-        <label className="text-sm font-medium text-gray-700">{children}</label>
-    );
-
-
-    // ✅ Web3Forms submission logic
-    const useWeb3Form = (roleType: string) => {
-        const { register, handleSubmit, reset } = useForm();
-        const [loading, setLoading] = useState(false);
-        const [message, setMessage] = useState("");
-
-        const onSubmit = async (data: any) => {
-            setLoading(true);
-            setMessage("");
-
-            try {
-                const formData = new FormData();
-                formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY as string);
-                formData.append("role", roleType);
-
-                Object.keys(data).forEach((key) => {
-                    if (key === "resume" && data[key]?.[0]) {
-                        formData.append("resume", data[key][0]);
-                    } else {
-                        formData.append(key, data[key]);
-                    }
-                });
-
-                const response = await fetch("https://api.web3forms.com/submit", {
-                    method: "POST",
-                    body: formData,
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    setMessage("✅ Form submitted successfully!");
-                    reset();
-                } else {
-                    setMessage("❌ Something went wrong. Try again.");
-                }
-            } catch {
-                setMessage("⚠️ Network error. Try again later.");
-            }
-
-            setLoading(false);
-        };
-
-        return { register, handleSubmit, onSubmit, loading, message };
-    };
-
-
-    // ✅ Shared Submit button
-    const SubmitButton = ({ loading }: { loading: boolean }) => (
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between px-6 md:px-12 h-[68px] border-b border-[#e4e4e4] shrink-0">
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image
+            src="/logo.png"
+            alt="Intakesense"
+            width={120}
+            height={40}
+            className="h-8 w-auto object-contain"
+          />
+        </Link>
         <button
-            type="submit"
-            disabled={loading}
-            className="w-full mt-4 py-2 rounded-md font-semibold bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 
-        hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white transition"
+          onClick={onClose}
+          aria-label="Close"
+          className="flex items-center justify-center w-9 h-9 rounded-full border border-[#e4e4e4] hover:border-[#0a0a0a] transition-colors"
         >
-            {loading ? "Submitting..." : "Submit"}
+          <X size={16} className="text-[#525252]" />
         </button>
-    );
+      </div>
 
-    // ✅ Wrapper for consistent layout + back/close buttons
-    const CardWrapper = ({
-        children,
-        title,
-        showBack,
-    }: {
-        children: React.ReactNode;
-        title: string;
-        showBack?: boolean;
-    }) => (
-        <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-2xl mx-auto p-6 sm:p-8 md:p-10">
-            {/* Back Button */}
-            {showBack && (
-                <button
-                    onClick={() => {
-                        if (posterType) setPosterType(null);
-                        else setRole(null);
-                    }}
-                    className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 p-2 rounded-full bg-gray-100"
-                    aria-label="Go back"
+      {/* Content */}
+      <div className="flex-1 flex items-center justify-center px-6 py-16">
+        {!submitted ? (
+          <div className="w-full max-w-md">
+            {/* Intent selection */}
+            {!intent && (
+              <div>
+                <p className="text-eyebrow mb-5">Let&apos;s get started</p>
+                <h1
+                  className="mb-10"
+                  style={{
+                    fontFamily:
+                      "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                    fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
+                    letterSpacing: "-0.025em",
+                    lineHeight: 1.1,
+                    color: "#0a0a0a",
+                  }}
                 >
-                    <ArrowLeft className="w-5 h-5" />
-                </button>
+                  What brings you
+                  <br />
+                  to Intakesense?
+                </h1>
+                <div className="flex flex-col gap-3">
+                  <button
+                    onClick={() => setIntent("hiring")}
+                    className="w-full text-left p-5 rounded-xl border border-[#e4e4e4] hover:border-[#178fbf] transition-colors group"
+                  >
+                    <p
+                      className="text-[1rem] font-[500] text-[#0a0a0a] mb-1 group-hover:text-[#178fbf] transition-colors"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      I&apos;m looking to hire
+                    </p>
+                    <p
+                      className="text-[0.875rem] text-[#909090]"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      Fill roles with guaranteed placements
+                    </p>
+                  </button>
+                  <button
+                    onClick={() => setIntent("seeking")}
+                    className="w-full text-left p-5 rounded-xl border border-[#e4e4e4] hover:border-[#f7a261] transition-colors group"
+                  >
+                    <p
+                      className="text-[1rem] font-[500] text-[#0a0a0a] mb-1 group-hover:text-[#f7a261] transition-colors"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      I&apos;m looking for work
+                    </p>
+                    <p
+                      className="text-[0.875rem] text-[#909090]"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      Find roles at India&apos;s best companies
+                    </p>
+                  </button>
+                </div>
+              </div>
             )}
-            {/* Close Button */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 p-2 rounded-full bg-gray-100"
-                aria-label="Close"
-            >
-                <X className="w-5 h-5" />
-            </button>
 
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 text-center mb-6 mt-8 sm:mt-6">{title}</h2>
-            {children}
-        </div>
-    );
+            {/* Form */}
+            {intent && (
+              <form onSubmit={handleSubmit}>
+                <div className="flex items-start justify-between mb-8 gap-4">
+                  <div>
+                    <p className="text-eyebrow mb-1.5">
+                      {intent === "hiring" ? "Hiring enquiry" : "Candidate application"}
+                    </p>
+                    <h2
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                        fontSize: "clamp(1.5rem, 3vw, 2rem)",
+                        letterSpacing: "-0.02em",
+                        lineHeight: 1.1,
+                        color: "#0a0a0a",
+                      }}
+                    >
+                      Tell us about yourself.
+                    </h2>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIntent("")}
+                    className="shrink-0 text-[0.8125rem] text-[#909090] hover:text-[#0a0a0a] transition-colors underline underline-offset-2 mt-1"
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    }}
+                  >
+                    Change
+                  </button>
+                </div>
 
-    // ✅ Employee Form
-    const EmployeeForm = () => {
-        const { register, handleSubmit, onSubmit, loading, message } = useWeb3Form("employee");
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-[0.8125rem] text-[#525252] mb-1.5"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      Full name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      placeholder="Priya Sharma"
+                      className="w-full px-4 py-3 rounded-lg border border-[#e4e4e4] text-[0.9375rem] text-[#0a0a0a] placeholder:text-[#d4d4d4] focus:outline-none focus:border-[#178fbf] transition-colors bg-white"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    />
+                  </div>
 
-        return (
-            <div className="sm:pt-2 pt-30">
-                <CardWrapper title="Job Seeker Registration" showBack>
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <Label>Full Name</Label>
-                                <Input {...register("name")} placeholder="Full Name" />
-                            </div>
-                            <div>
-                                <Label>Email</Label>
-                                <Input type="email" {...register("email")} placeholder="youremail@gmail.com" />
-                            </div>
-                            <div>
-                                <Label>Phone</Label>
-                                <Input type="tel" {...register("phone")} placeholder="+91 9711 123 456" />
-                            </div>
-                            <div>
-                                <Label>Gender</Label>
-                                <select
-                                    {...register("sex")}
-                                    className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base"
-                                >
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div>
-                                <Label>Age</Label>
-                                <Input type="number" {...register("age")} placeholder="25" />
-                            </div>
-                            <div>
-                                <Label>Highest Education</Label>
-                                <Input {...register("education")} placeholder="Bachelor's Degree" />
-                            </div>
-                            {/* <div className="sm:col-span-2">
-                                <Label>Upload Resume (PDF only)</Label>
-                                <Input type="file" accept="application/pdf" {...register("resume")} />
-                            </div> */}
-                        </div>
-                        <SubmitButton loading={loading} />
-                        {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
-                    </form>
-                </CardWrapper>
-            </div>
-        );
-    };
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-[0.8125rem] text-[#525252] mb-1.5"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      Work email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      placeholder="priya@company.com"
+                      className="w-full px-4 py-3 rounded-lg border border-[#e4e4e4] text-[0.9375rem] text-[#0a0a0a] placeholder:text-[#d4d4d4] focus:outline-none focus:border-[#178fbf] transition-colors bg-white"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    />
+                  </div>
 
-    // ✅ Company Form
-    const CompanyForm = () => {
-        const { register, handleSubmit, onSubmit, loading, message } = useWeb3Form("company");
-
-        return (
-            <div className="pt-60">
-                <CardWrapper title="Company Job Poster Registration" showBack>
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                        <Label>Company Name</Label>
-                        <Input {...register("companyName")} placeholder="Company Inc." />
-
-                        <Label>Description</Label>
-                        <TextArea rows={4} {...register("description")} placeholder="Brief description..." />
-
-                        <Label>Owner Name</Label>
-                        <Input {...register("ownerName")} placeholder="Full Name" />
-
-                        <Label>Owner Email</Label>
-                        <Input type="email" {...register("ownerEmail")} placeholder="owner@company.com" />
-
-                        <Label>Address</Label>
-                        <Input {...register("address")} placeholder="123 Business Rd, City" />
-
-                        <Label>Socials (optional)</Label>
-                        <Input {...register("socials")} placeholder="LinkedIn, Twitter, etc." />
-
-                        <Label>Website (optional)</Label>
-                        <Input {...register("website")} placeholder="https://company.com" />
-
-                        <SubmitButton loading={loading} />
-                        {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
-                    </form>
-                </CardWrapper>
-            </div>
-        );
-    };
-
-    // ✅ Individual Form
-    const IndividualForm = () => {
-        const { register, handleSubmit, onSubmit, loading, message } = useWeb3Form("individual");
-        return (
-            <CardWrapper title="Individual Job Poster Registration" showBack>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <Label>Full Name</Label>
-                            <Input {...register("name")} placeholder="Full Name" />
-                        </div>
-                        <div>
-                            <Label>Email</Label>
-                            <Input type="email" {...register("email")} placeholder="youremail@gmail.com" />
-                        </div>
-                        <div>
-                            <Label>Phone</Label>
-                            <Input type="tel" {...register("phone")} placeholder="+91 9711 123 456" />
-                        </div>
-                        <div className="sm:col-span-2">
-                            <Label>Address</Label>
-                            <Input {...register("address")} placeholder="123 Business Rd, City, State" />
-                        </div>
+                  {intent === "hiring" && (
+                    <div>
+                      <label
+                        htmlFor="company"
+                        className="block text-[0.8125rem] text-[#525252] mb-1.5"
+                        style={{
+                          fontFamily:
+                            "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                        }}
+                      >
+                        Company name
+                      </label>
+                      <input
+                        id="company"
+                        type="text"
+                        required
+                        value={form.company}
+                        onChange={(e) =>
+                          setForm({ ...form, company: e.target.value })
+                        }
+                        placeholder="Acme Technologies"
+                        className="w-full px-4 py-3 rounded-lg border border-[#e4e4e4] text-[0.9375rem] text-[#0a0a0a] placeholder:text-[#d4d4d4] focus:outline-none focus:border-[#178fbf] transition-colors bg-white"
+                        style={{
+                          fontFamily:
+                            "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                        }}
+                      />
                     </div>
-                    <SubmitButton loading={loading} />
-                    {message && <p className="text-center text-sm text-gray-700 mt-2">{message}</p>}
-                </form>
-            </CardWrapper>
-        );
-    };
+                  )}
 
-    // ✅ Selection UIs
-    const RoleSelection = () => (
-        <CardWrapper title="Choose Your Role">
-            <div className="flex flex-col gap-4">
-                <button
-                    onClick={() => setRole("employee")}
-                    className="px-6 py-3 rounded-md font-medium bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 
-            hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white transition"
-                >
-                    I’m a Job Seeker
-                </button>
-                <button
-                    onClick={() => setRole("employer")}
-                    className="px-6 py-3 rounded-md font-medium bg-gray-100 hover:bg-gray-200 text-gray-800 transition"
-                >
-                    I’m a Job Poster
-                </button>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-[0.8125rem] text-[#525252] mb-1.5"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    >
+                      {intent === "hiring"
+                        ? "What roles are you looking to fill?"
+                        : "What kind of role are you looking for?"}
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={4}
+                      value={form.message}
+                      onChange={(e) =>
+                        setForm({ ...form, message: e.target.value })
+                      }
+                      placeholder={
+                        intent === "hiring"
+                          ? "e.g. 2 senior engineers, 1 product manager in Bangalore"
+                          : "e.g. Senior product designer, remote, 15+ LPA"
+                      }
+                      className="w-full px-4 py-3 rounded-lg border border-[#e4e4e4] text-[0.9375rem] text-[#0a0a0a] placeholder:text-[#d4d4d4] focus:outline-none focus:border-[#178fbf] transition-colors bg-white resize-none"
+                      style={{
+                        fontFamily:
+                          "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                      }}
+                    />
+                  </div>
+
+                  <button type="submit" className="btn-primary mt-2 justify-center py-3">
+                    Submit <span aria-hidden="true">→</span>
+                  </button>
+
+                  <p
+                    className="text-[0.75rem] text-[#909090] text-center"
+                    style={{
+                      fontFamily:
+                        "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+                    }}
+                  >
+                    We&apos;ll be in touch within 24 hours.
+                  </p>
+                </div>
+              </form>
+            )}
+          </div>
+        ) : (
+          /* Success state */
+          <div className="w-full max-w-md text-center">
+            <div className="w-12 h-12 rounded-full bg-[#f0f9ff] flex items-center justify-center mx-auto mb-6">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 10L8 14L16 6"
+                  stroke="#178fbf"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
-        </CardWrapper>
-    );
-
-    const PosterSelection = () => (
-        <CardWrapper title="Post a Job As" showBack>
-            <div className="flex flex-col gap-4">
-                <button
-                    onClick={() => setPosterType("individual")}
-                    className="px-6 py-3 rounded-md font-medium bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 
-            hover:from-primary-500 hover:via-primary-600 hover:to-primary-700 text-white transition"
-                >
-                    Individual
-                </button>
-                <button
-                    onClick={() => setPosterType("company")}
-                    className="px-6 py-3 rounded-md font-medium bg-gray-100 hover:bg-gray-200 text-gray-800 transition"
-                >
-                    Company
-                </button>
-            </div>
-        </CardWrapper>
-    );
-
-    return (
-        <div className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto">
-            {!role && <RoleSelection />}
-            {role === "employee" && <EmployeeForm />}
-            {role === "employer" && !posterType && <PosterSelection />}
-            {role === "employer" && posterType === "company" && <CompanyForm />}
-            {role === "employer" && posterType === "individual" && <IndividualForm />}
-        </div>
-    );
+            <h2
+              style={{
+                fontFamily:
+                  "var(--font-instrument-serif, 'Instrument Serif', Georgia, serif)",
+                fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
+                letterSpacing: "-0.025em",
+                lineHeight: 1.1,
+                color: "#0a0a0a",
+              }}
+              className="mb-4"
+            >
+              We&apos;ll be in touch.
+            </h2>
+            <p
+              className="text-[0.9375rem] text-[#525252] mb-8"
+              style={{
+                fontFamily:
+                  "var(--font-instrument-sans, 'Instrument Sans', system-ui, sans-serif)",
+              }}
+            >
+              Thanks{form.name ? `, ${form.name.split(" ")[0]}` : ""}. Our team will
+              reach out within 24 hours.
+            </p>
+            <button onClick={onClose} className="btn-ghost">
+              Back to site
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
